@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8"?>
+<feed xmlns="http://www.w3.org/2005/Atom">
+
+  <title><![CDATA[My Octopress Blog]]></title>
+  <link href="http://isame7.github.io/atom.xml" rel="self"/>
+  <link href="http://isame7.github.io/"/>
+  <updated>2015-07-14T23:08:31+02:00</updated>
+  <id>http://isame7.github.io/</id>
+  <author>
+    <name><![CDATA[Your Name]]></name>
+    
+  </author>
+  <generator uri="http://octopress.org/">Octopress</generator>
+
+  
+  <entry>
+    <title type="html"><![CDATA[How I Built Parallax Effect Inspired by Yahoo Weather]]></title>
+    <link href="http://isame7.github.io/blog/2015/07/14/how-i-built-parallax-effect-inspired-by-yahoo-weather-app/"/>
+    <updated>2015-07-14T22:07:19+02:00</updated>
+    <id>http://isame7.github.io/blog/2015/07/14/how-i-built-parallax-effect-inspired-by-yahoo-weather-app</id>
+    <content type="html"><![CDATA[
+]]></content>
+  </entry>
+  
+</feed>
