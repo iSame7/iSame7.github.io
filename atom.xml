@@ -4,7 +4,7 @@
   <title><![CDATA[Smapps]]></title>
   <link href="http://isame7.github.io/atom.xml" rel="self"/>
   <link href="http://isame7.github.io/"/>
-  <updated>2015-07-17T17:23:16+02:00</updated>
+  <updated>2015-07-17T17:34:46+02:00</updated>
   <id>http://isame7.github.io/</id>
   <author>
     <name><![CDATA[Sameh Mabrouk]]></name>
@@ -21,6 +21,8 @@
     <content type="html"><![CDATA[<p>One of the first projects Yahoo’s Marissa Mayer oversaw as CEO was the Yahoo Weather app. The app was so well received that it even ended up receiving a coveted Apple Design Award in 2013.</p>
 
 <p>Test Test Test</p>
+
+<p><img src="images/image_iphone6_gold_portrait.png" alt="Screenshot" width="320px"/></p>
 ]]></content>
   </entry>
   
