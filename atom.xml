@@ -4,7 +4,7 @@
   <title><![CDATA[Smapps]]></title>
   <link href="http://isame7.github.io/atom.xml" rel="self"/>
   <link href="http://isame7.github.io/"/>
-  <updated>2015-08-18T19:30:13+02:00</updated>
+  <updated>2015-08-18T19:35:36+02:00</updated>
   <id>http://isame7.github.io/</id>
   <author>
     <name><![CDATA[Sameh Mabrouk]]></name>
@@ -53,7 +53,7 @@ Finally commit all(make the changes permanent):</p>
 </span></code></pre></td></tr></table></div></figure>
 
 
-<p>A list of all files commited to the local git repo will appear to the terminal window. the nex screen illustrates my terminal:</p>
+<p>A list of all files commited to the local git repo will appear to the terminal window. the next screen illustrates my terminal:</p>
 
 <p><img class="left" src="images/git-screenshot.png" title="#2" ></p>
 ]]></content>
