@@ -1,0 +1,240 @@
+
+<!DOCTYPE html>
+<!--[if IEMobile 7 ]><html class="no-js iem7"><![endif]-->
+<!--[if lt IE 9]><html class="no-js lte-ie8"><![endif]-->
+<!--[if (gt IE 8)|(gt IEMobile 7)|!(IEMobile)|!(IE)]><!--><html class="no-js" lang="en"><!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  <title>watchOS 2: Animations - Smapps</title>
+  <meta name="author" content="Sameh Mabrouk">
+
+  
+  <meta name="description" content="The new operating system for Apple Watch, watchOS 2, was introduced a couple of weeks ago at WWDC 2015. It brings a lot of improvements, mostly for &hellip;">
+  
+
+  <!-- http://t.co/dKP3o1e -->
+  <meta name="HandheldFriendly" content="True">
+  <meta name="MobileOptimized" content="320">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  
+  <link rel="canonical" href="http://isame7.github.io/blog/2015/08/03/watchos-2-animations/">
+  <link href="/favicon.png" rel="icon">
+  <link href="/stylesheets/screen.css" media="screen, projection" rel="stylesheet" type="text/css">
+  <link href="/atom.xml" rel="alternate" title="Smapps" type="application/atom+xml">
+  <script src="/javascripts/modernizr-2.0.js"></script>
+  <script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+  <script>!window.jQuery && document.write(unescape('%3Cscript src="/javascripts/libs/jquery.min.js"%3E%3C/script%3E'))</script>
+  <script src="/javascripts/octopress.js" type="text/javascript"></script>
+  <!--Fonts from Google"s Web font directory at http://google.com/webfonts -->
+<link href="//fonts.googleapis.com/css?family=PT+Serif:regular,italic,bold,bolditalic" rel="stylesheet" type="text/css">
+<link href="//fonts.googleapis.com/css?family=PT+Sans:regular,italic,bold,bolditalic" rel="stylesheet" type="text/css">
+
+  
+
+</head>
+
+<body   >
+  <header role="banner"><hgroup>
+  <h1><a href="/">Smapps</a></h1>
+  
+    <h2>snitch tech stuff from here and there!</h2>
+  
+</hgroup>
+
+</header>
+  <nav role="navigation"><ul class="subscription" data-subscription="rss">
+  <li><a href="/atom.xml" rel="subscribe-rss" title="subscribe via RSS">RSS</a></li>
+  
+</ul>
+  
+<form action="https://www.google.com/search" method="get">
+  <fieldset role="search">
+    <input type="hidden" name="sitesearch" value="isame7.github.io">
+    <input class="search" type="text" name="q" results="0" placeholder="Search"/>
+  </fieldset>
+</form>
+  
+<ul class="main-navigation">
+  <li><a href="/">Blog</a></li>
+  <li><a href="/blog/archives">Archives</a></li>
+</ul>
+
+</nav>
+  <div id="main">
+    <div id="content">
+      <div>
+<article class="hentry" role="article">
+  
+  <header>
+    
+      <h1 class="entry-title">watchOS 2: Animations</h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+<time class='entry-date' datetime='2015-08-03T00:43:06+02:00'><span class='date'><span class='date-month'>Aug</span> <span class='date-day'>3</span><span class='date-suffix'>rd</span>, <span class='date-year'>2015</span></span> <span class='time'>12:43 am</span></time>
+        
+      </p>
+    
+  </header>
+
+
+<div class="entry-content"><p>The new operating system for Apple Watch, watchOS 2, was introduced a couple of weeks ago at WWDC 2015. It brings a lot of improvements, mostly for developers looking to create an Apple Watch app. These are the things that I find to be most important for developers:</p>
+
+<ul>
+<li>WatchKit apps are now running natively on the watch. This brings the much needed improvement in speed, resulting in a better user experience.</li>
+<li>The new Watch Connectivity framework enables all sorts of communication and data sharing between the parent iOS app and the watchOS app.</li>
+<li>watchOS 2 apps have access to hardware data, such as data from the motion sensor, audio recording, and they can even access heart rate data.</li>
+<li>watchOS 2 also introduced animations. On watchOS 1, the only option to perform an animation was to generate a series of images and then iterate through them. watchOS 2 brings true animations to the Apple Watch. You can animate the user interface by changing layout properties inside an animation block. That’s where this tutorial comes in.</li>
+</ul>
+
+
+<h2>1. Why Care About Animations?</h2>
+
+<p>Before we get to the nuts and bolts, I’d like to spend a minute talking about the purpose of animations on Apple Watch apps.</p>
+
+<p>The obvious reason is that they make the user interface more enjoyable if used appropriately. And when it comes to Apple Watch, that is a big if. Since most app interactions only last for a few seconds, you really don’t want to go overboard with animations.</p>
+
+<p>The second, and I believe more important reason, is that they allow for custom navigation hierarchies inside Apple Watch apps. Let&rsquo;s suppose you need to present a screen that the user can only leave by taking a specific action. Normally, Apple Watch apps always have a cancel button in the top left corner when a modal interface controller is presented. With animations and clever layout manipulation, you could create your own &ldquo;present view controller&rdquo; routine that shows your app&rsquo;s content full-screen, dismissing it by that specific action. That is one of the things you’ll learn in this tutorial.</p>
+
+<h2>Basics</h2>
+
+<p>//Describe the animation in watchOS 1</p>
+
+<p>The principle of animations on watchOS 2 is simple, you set one or more of the animatable properties inside an animation block. The following example illustrates how this works.</p>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+</pre></td><td class='code'><pre><code class='swift'><span class='line'><span class="p">[</span><span class="nb">self</span> <span class="nl">animateWithDuration</span><span class="p">:</span><span class="mf">0.5</span> <span class="nl">animations</span><span class="p">:</span><span class="o">^</span><span class="p">{</span>
+</span><span class='line'>    <span class="p">[</span><span class="nb">self</span><span class="p">.</span><span class="n">circleGroup</span> <span class="nl">setHorizontalAlignment</span><span class="p">:</span><span class="n">WKInterfaceObjectHorizontalAlignmentRight</span><span class="p">];</span>
+</span><span class='line'><span class="p">}];</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>This method causes the circleGroup to be aligned to the right, with an animation with a duration of 0.5 seconds. As you can see, we are calling animateWithDuration:animations: on self, which is an instance of WKInterfaceController. This is different from iOS where the animation methods are class methods on UIView.</p>
+
+<p>The below list shows which properties are animatable:</p>
+
+<p>.opacity</p>
+
+<p>.alignment</p>
+
+<p>.width and height</p>
+
+<p>.background color</p>
+
+<p>.color and tint color</p>
+
+<p>Bear in mind that it’s still not possible on watchOS 2 to create user interface elements at runtime. But since you can hide them or set their alpha to 0 in the storyboard, this shouldn’t be that big of a problem.</p>
+
+<p>That’s it. Armed with your knowledge about the WatchKit layout system, you are now ready to start working with native animations on watchOS. Let’s get started by creating a sample app so I can show you a couple of examples of how this all fits together.</p>
+</div>
+
+
+  <footer>
+    <p class="meta">
+      
+  
+
+<span class="byline author vcard">Posted by <span class="fn">Sameh Mabrouk</span></span>
+
+      
+
+
+
+
+<time class='entry-date' datetime='2015-08-03T00:43:06+02:00'><span class='date'><span class='date-month'>Aug</span> <span class='date-day'>3</span><span class='date-suffix'>rd</span>, <span class='date-year'>2015</span></span> <span class='time'>12:43 am</span></time>
+      
+
+
+    </p>
+    
+      <div class="sharing">
+  
+  <a href="//twitter.com/share" class="twitter-share-button" data-url="http://isame7.github.io/blog/2015/08/03/watchos-2-animations/" data-via="" data-counturl="http://isame7.github.io/blog/2015/08/03/watchos-2-animations/" >Tweet</a>
+  
+  
+  
+</div>
+
+    
+    <p class="meta">
+      
+        <a class="basic-alignment left" href="/blog/2015/07/14/how-i-built-parallax-effect-inspired-by-yahoo-weather-app/" title="Previous Post: How i built Parallax effect Inspired by Yahoo Weather">&laquo; How i built Parallax effect Inspired by Yahoo Weather</a>
+      
+      
+        <a class="basic-alignment right" href="/blog/2015/08/18/Git-source-control-in-xcode/" title="Next Post: Git Source Control in Xcode">Git Source Control in Xcode &raquo;</a>
+      
+    </p>
+  </footer>
+</article>
+
+</div>
+
+<aside class="sidebar">
+  
+    <section>
+  <h1>Recent Posts</h1>
+  <ul id="recent_posts">
+    
+      <li class="post">
+        <a href="/blog/2015/08/18/Git-source-control-in-xcode/">Git Source Control in Xcode</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2015/08/03/watchos-2-animations/">watchOS 2: Animations</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2015/07/14/how-i-built-parallax-effect-inspired-by-yahoo-weather-app/">How I Built Parallax Effect Inspired by Yahoo Weather</a>
+      </li>
+    
+  </ul>
+</section>
+
+
+
+
+
+  
+</aside>
+
+
+    </div>
+  </div>
+  <footer role="contentinfo"><p>
+  Copyright &copy; 2015 - Sameh Mabrouk -
+  <span class="credit">Powered by <a href="http://octopress.org">Octopress</a></span>
+</p>
+
+</footer>
+  
+
+
+
+
+
+
+
+  <script type="text/javascript">
+    (function(){
+      var twitterWidgets = document.createElement('script');
+      twitterWidgets.type = 'text/javascript';
+      twitterWidgets.async = true;
+      twitterWidgets.src = '//platform.twitter.com/widgets.js';
+      document.getElementsByTagName('head')[0].appendChild(twitterWidgets);
+    })();
+  </script>
+
+
+
+
+
+</body>
+</html>

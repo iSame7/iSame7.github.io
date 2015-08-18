@@ -9,7 +9,7 @@
   <meta name="author" content="Sameh Mabrouk">
 
   
-  <meta name="description" content="One of the first projects Yahoo’s Marissa Mayer oversaw as CEO was the Yahoo Weather app. The app was so well received that it even ended up &hellip;">
+  <meta name="description" content="It&rsquo;s obvious that adding a Git repository to a project is totally effortless using Xcode. However, what happens if you don&rsquo;t include a &hellip;">
   
 
   <!-- http://t.co/dKP3o1e -->
@@ -65,6 +65,150 @@
     <div id="content">
       <div class="blog-index">
   
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/blog/2015/08/18/Git-source-control-in-xcode/">Git Source Control in Xcode</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+<time class='entry-date' datetime='2015-08-18T18:51:56+02:00'><span class='date'><span class='date-month'>Aug</span> <span class='date-day'>18</span><span class='date-suffix'>th</span>, <span class='date-year'>2015</span></span> <span class='time'>6:51 pm</span></time>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><p>It&rsquo;s obvious that adding a Git repository to a project is totally effortless using Xcode. However, what happens if you don&rsquo;t include a Git repo during a project setup, or if you want to add one at a later time? Well, the good news is that you can add a repo for your project at any time, but without using Xcode.</p>
+
+<p>Befor demonstrating anything, you must download the Command line tools through Xcode, as we are going to work in terminal and we need some extra tools available. to install the command line tools, goto the Xcode > Preferences&hellip; menu on Xcode, and then select the Downloads tab. In the upper side of the window, under the Components section, click on the button with a down arrow existing at the right side of the Commnad line Tools options. Once the download is over, a checkmark will appear instead of the download button.</p>
+
+<p>Now, create Xcode project for the sake of this example. make sure to deselect the Create git repository options. We don&rsquo;t want Xcode to prepare a repository for us in this case. Name the project and save it in your Desktop, so you can follow along with the commands i will show.</p>
+
+<p>Once everything is ready, open a Terminal window(if you have already opend any, make sure to close it first, so any changes made by installing the command line tools to be applied). For starters, navigate your self to the new project&rsquo;s directory:</p>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class='swift'><span class='line'><span class="n">cd</span> <span class="o">/</span><span class="n">users</span><span class="o">/</span><span class="n">YOUR</span><span class="o">-</span><span class="n">USERNAME</span><span class="o">/</span><span class="n">Desktop</span><span class="o">/</span><span class="n">ProjectName</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class='swift'><span class='line'><span class="n">git</span> <span class="k">init</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>This will initialize an empty repo, and if you either go to Finder or use the ls terminal command, you&rsquo;ll see that the .git sub-directory has been created. Cool. Keep going:</p>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class='swift'><span class='line'><span class="n">git</span> <span class="n">add</span><span class="p">.</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>With this one, all contents of the current directory(the dot [.] symbol) will be added to the repo.
+Finally commit all(make the changes permanent):</p>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class='swift'><span class='line'><span class="n">git</span> <span class="n">commit</span> <span class="o">-</span><span class="n">m</span> <span class="err">&#39;</span><span class="n">initial</span> <span class="n">commit</span><span class="err">&#39;</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>A list of all files commited to the local git repo will appear to the terminal window. the nex screen illustrates my terminal:</p>
+
+<p><img class="left" src="images/git-screenshot.png" title="#2" ></p>
+</div>
+  
+  
+
+
+    </article>
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/blog/2015/08/03/watchos-2-animations/">watchOS 2: Animations</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+<time class='entry-date' datetime='2015-08-03T00:43:06+02:00'><span class='date'><span class='date-month'>Aug</span> <span class='date-day'>3</span><span class='date-suffix'>rd</span>, <span class='date-year'>2015</span></span> <span class='time'>12:43 am</span></time>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><p>The new operating system for Apple Watch, watchOS 2, was introduced a couple of weeks ago at WWDC 2015. It brings a lot of improvements, mostly for developers looking to create an Apple Watch app. These are the things that I find to be most important for developers:</p>
+
+<ul>
+<li>WatchKit apps are now running natively on the watch. This brings the much needed improvement in speed, resulting in a better user experience.</li>
+<li>The new Watch Connectivity framework enables all sorts of communication and data sharing between the parent iOS app and the watchOS app.</li>
+<li>watchOS 2 apps have access to hardware data, such as data from the motion sensor, audio recording, and they can even access heart rate data.</li>
+<li>watchOS 2 also introduced animations. On watchOS 1, the only option to perform an animation was to generate a series of images and then iterate through them. watchOS 2 brings true animations to the Apple Watch. You can animate the user interface by changing layout properties inside an animation block. That’s where this tutorial comes in.</li>
+</ul>
+
+
+<h2>1. Why Care About Animations?</h2>
+
+<p>Before we get to the nuts and bolts, I’d like to spend a minute talking about the purpose of animations on Apple Watch apps.</p>
+
+<p>The obvious reason is that they make the user interface more enjoyable if used appropriately. And when it comes to Apple Watch, that is a big if. Since most app interactions only last for a few seconds, you really don’t want to go overboard with animations.</p>
+
+<p>The second, and I believe more important reason, is that they allow for custom navigation hierarchies inside Apple Watch apps. Let&rsquo;s suppose you need to present a screen that the user can only leave by taking a specific action. Normally, Apple Watch apps always have a cancel button in the top left corner when a modal interface controller is presented. With animations and clever layout manipulation, you could create your own &ldquo;present view controller&rdquo; routine that shows your app&rsquo;s content full-screen, dismissing it by that specific action. That is one of the things you’ll learn in this tutorial.</p>
+
+<h2>Basics</h2>
+
+<p>//Describe the animation in watchOS 1</p>
+
+<p>The principle of animations on watchOS 2 is simple, you set one or more of the animatable properties inside an animation block. The following example illustrates how this works.</p>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+</pre></td><td class='code'><pre><code class='swift'><span class='line'><span class="p">[</span><span class="nb">self</span> <span class="nl">animateWithDuration</span><span class="p">:</span><span class="mf">0.5</span> <span class="nl">animations</span><span class="p">:</span><span class="o">^</span><span class="p">{</span>
+</span><span class='line'>    <span class="p">[</span><span class="nb">self</span><span class="p">.</span><span class="n">circleGroup</span> <span class="nl">setHorizontalAlignment</span><span class="p">:</span><span class="n">WKInterfaceObjectHorizontalAlignmentRight</span><span class="p">];</span>
+</span><span class='line'><span class="p">}];</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>This method causes the circleGroup to be aligned to the right, with an animation with a duration of 0.5 seconds. As you can see, we are calling animateWithDuration:animations: on self, which is an instance of WKInterfaceController. This is different from iOS where the animation methods are class methods on UIView.</p>
+
+<p>The below list shows which properties are animatable:</p>
+
+<p>.opacity</p>
+
+<p>.alignment</p>
+
+<p>.width and height</p>
+
+<p>.background color</p>
+
+<p>.color and tint color</p>
+
+<p>Bear in mind that it’s still not possible on watchOS 2 to create user interface elements at runtime. But since you can hide them or set their alpha to 0 in the storyboard, this shouldn’t be that big of a problem.</p>
+
+<p>That’s it. Armed with your knowledge about the WatchKit layout system, you are now ready to start working with native animations on watchOS. Let’s get started by creating a sample app so I can show you a couple of examples of how this all fits together.</p>
+</div>
+  
+  
+
+
+    </article>
   
   
     <article>
@@ -275,6 +419,14 @@
     <section>
   <h1>Recent Posts</h1>
   <ul id="recent_posts">
+    
+      <li class="post">
+        <a href="/blog/2015/08/18/Git-source-control-in-xcode/">Git Source Control in Xcode</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2015/08/03/watchos-2-animations/">watchOS 2: Animations</a>
+      </li>
     
       <li class="post">
         <a href="/blog/2015/07/14/how-i-built-parallax-effect-inspired-by-yahoo-weather-app/">How I Built Parallax Effect Inspired by Yahoo Weather</a>
