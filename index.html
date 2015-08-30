@@ -9,7 +9,7 @@
   <meta name="author" content="Sameh Mabrouk">
 
   
-  <meta name="description" content="Yesterday i recieved a JIRA issue from QA that the iOS application is very slow apparently the issue was in application services(API) being very slow &hellip;">
+  <meta name="description" content="It&rsquo;s often difficult to reproduce crashes reported from users, During your app beta testing, and even when you have apps on the App Store. &hellip;">
   
 
   <!-- http://t.co/dKP3o1e -->
@@ -65,6 +65,65 @@
     <div id="content">
       <div class="blog-index">
   
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/blog/2015/08/30/symbolicating-ios-crash-reports/">Symbolicating iOS Crash Reports</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+<time class='entry-date' datetime='2015-08-30T03:25:05+02:00'><span class='date'><span class='date-month'>Aug</span> <span class='date-day'>30</span><span class='date-suffix'>th</span>, <span class='date-year'>2015</span></span> <span class='time'>3:25 am</span></time>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><p>It&rsquo;s often difficult to reproduce crashes reported from users, During your app beta testing, and even when you have apps on the App Store.
+Yesterday i faced an issue that my app works well in Debug mode on Xcode but it&rsquo;s crash when installing it from TestFlight and trying the same scenario on it. Unfrtuanalty i was integratting InstaBug &ldquo;it&rsquo;s a crash reporting tool&rdquo; but the trial period ended and no more crahses reported to me over email. So i have to do it manually. Luckily, iOS devices keep logs of each crash and can tell you the exact line of code that causes the problem. Let&rsquo;s take a look at a crash log for my app.</p>
+
+<p><img class="left" src="images/CrashReport.png" title="#2" ></p>
+
+<p>From the image above only the hex symbols of the objects and the memory addresses are there, So we need to symbolicate them.</p>
+
+<p>First, you need to have the .app and .dSYM for the build that generated the crash log.</p>
+
+<p>These are the following steps:</p>
+
+<p>Step1: Create a folder in desktop, and give it a name &ldquo;CrashReport&rdquo; and put three files (&ldquo;MyApp.app&rdquo;, &ldquo;MyApp.app.dSYM&rdquo;, MyApp.crash) in it.</p>
+
+<p>Step2: Open finder and got to Applications, find Xcode application, right click on it and click &ldquo;Show Package Contents&rdquo; Then follow this path,
+For Xcode 6 and above the path is Applications/Xcode.app/Contents/SharedFrameworks/DTDeviceKitBase.framework/Versions/A/Resources
+Where you find &ldquo;symbolicatecrash&rdquo; file , copy this and paste it to &ldquo;CrashReport&rdquo; folder.</p>
+
+<p>Step3:  launch the terminal, run these 3 Command</p>
+
+<p>cd /Users/UserName/Desktop/CrashLog and press Enter button</p>
+
+<p>export DEVELOPER_DIR=&ldquo;/Applications/Xcode.app/Contents/Developer&rdquo; and press Enter</p>
+
+<p>./symbolicatecrash -A -v MYApp_2013-07-18.crash MyApp.app.dSYM and press Enter Now its Done..
+(NOTE: versions around 6.4 or later do not have the -A option &ndash; just leave it out)</p>
+
+<p>Now you should see a lovely, symbolicated crash report in the terminal:</p>
+
+<p><img class="left" src="images/SymbolicatedCrashReport.png" title="#2" ></p>
+
+<p>Happy Coding :)</p>
+</div>
+  
+  
+
+
+    </article>
   
   
     <article>
@@ -494,6 +553,10 @@ Finally commit all(make the changes permanent):</p>
     <section>
   <h1>Recent Posts</h1>
   <ul id="recent_posts">
+    
+      <li class="post">
+        <a href="/blog/2015/08/30/symbolicating-ios-crash-reports/">Symbolicating iOS Crash Reports</a>
+      </li>
     
       <li class="post">
         <a href="/blog/2015/08/27/performance-test-in-xcode/">Performance Test in Xcode</a>
