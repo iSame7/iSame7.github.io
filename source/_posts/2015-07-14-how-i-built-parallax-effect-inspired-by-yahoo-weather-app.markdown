@@ -8,7 +8,6 @@ categories:
 
 One of the first projects Yahoo’s Marissa Mayer oversaw as CEO was the Yahoo Weather app. The app was so well received that it even ended up receiving a coveted Apple Design Award in 2013.
 
-
 {% img left images/image_iphone6_gold_portrait.png screenshot #1 %}
 
 
@@ -126,5 +125,3 @@ func scrollVerticallyToOffset(offsetY:CGFloat){
 
 
 Check out Glassy control on [GitHub](https://github.com/iSame7/Glassy).
-
-
