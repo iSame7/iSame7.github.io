@@ -2,10 +2,10 @@
 #      Main Configs       #
 # ----------------------- #
 
-url: http://yoursite.com
-title: My Octopress Blog
-subtitle: A blogging framework for hackers.
-author: Your Name
+url: http://isame7.github.io
+title: smapps
+subtitle: Tech stuff from here and there.
+author: Sameh Mabrouk
 simple_search: https://www.google.com/search
 description:
 
