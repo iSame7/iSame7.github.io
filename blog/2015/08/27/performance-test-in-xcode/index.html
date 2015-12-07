@@ -1,0 +1,246 @@
+
+<!DOCTYPE html>
+<!--[if IEMobile 7 ]><html class="no-js iem7"><![endif]-->
+<!--[if lt IE 9]><html class="no-js lte-ie8"><![endif]-->
+<!--[if (gt IE 8)|(gt IEMobile 7)|!(IEMobile)|!(IE)]><!--><html class="no-js" lang="en"><!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  <title>Performance Test in Xcode - Smapps</title>
+  <meta name="author" content="Sameh Mabrouk">
+
+  
+  <meta name="description" content="Yesterday i recieved a JIRA issue from QA that the iOS application is very slow apparently the issue was in application services(API) being very slow &hellip;">
+  
+
+  <!-- http://t.co/dKP3o1e -->
+  <meta name="HandheldFriendly" content="True">
+  <meta name="MobileOptimized" content="320">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  
+  <link rel="canonical" href="http://isame7.github.io/blog/2015/08/27/performance-test-in-xcode/">
+  <link href="/favicon.png" rel="icon">
+  <link href="/stylesheets/screen.css" media="screen, projection" rel="stylesheet" type="text/css">
+  <link href="/atom.xml" rel="alternate" title="Smapps" type="application/atom+xml">
+  <script src="/javascripts/modernizr-2.0.js"></script>
+  <script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+  <script>!window.jQuery && document.write(unescape('%3Cscript src="/javascripts/libs/jquery.min.js"%3E%3C/script%3E'))</script>
+  <script src="/javascripts/octopress.js" type="text/javascript"></script>
+  <!--Fonts from Google"s Web font directory at http://google.com/webfonts -->
+<link href="//fonts.googleapis.com/css?family=PT+Serif:regular,italic,bold,bolditalic" rel="stylesheet" type="text/css">
+<link href="//fonts.googleapis.com/css?family=PT+Sans:regular,italic,bold,bolditalic" rel="stylesheet" type="text/css">
+
+  
+
+</head>
+
+<body   >
+  <header role="banner"><hgroup>
+  <h1><a href="/">Smapps</a></h1>
+  
+    <h2>snitch tech stuff from here and there!</h2>
+  
+</hgroup>
+
+</header>
+  <nav role="navigation"><ul class="subscription" data-subscription="rss">
+  <li><a href="/atom.xml" rel="subscribe-rss" title="subscribe via RSS">RSS</a></li>
+  
+</ul>
+  
+<form action="https://www.google.com/search" method="get">
+  <fieldset role="search">
+    <input type="hidden" name="sitesearch" value="isame7.github.io">
+    <input class="search" type="text" name="q" results="0" placeholder="Search"/>
+  </fieldset>
+</form>
+  
+<ul class="main-navigation">
+  <li><a href="/">Blog</a></li>
+  <li><a href="/Roudybag">Projects</a></li>
+  <li><a href="/blog/archives">Archives</a></li>
+</ul>
+
+</nav>
+  <div id="main">
+    <div id="content">
+      <div>
+<article class="hentry" role="article">
+  
+  <header>
+    
+      <h1 class="entry-title">Performance Test in Xcode</h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+<time class='entry-date' datetime='2015-08-27T02:48:33+02:00'><span class='date'><span class='date-month'>Aug</span> <span class='date-day'>27</span><span class='date-suffix'>th</span>, <span class='date-year'>2015</span></span> <span class='time'>2:48 am</span></time>
+        
+      </p>
+    
+  </header>
+
+
+<div class="entry-content"><p>Yesterday i recieved a JIRA issue from QA that the iOS application is very slow apparently the issue was in application services(API) being very slow to perform any operation.
+I started to investigate in the issue and there was a use case that the user select a file then there was a 2 API that should be called to process this file to be previewed in PDF previewer, So i started to think about a way to calculate the time the process it takes starting from selecting the file untile it&rsquo;s previewed. i eneded up with profiling and therfore i did some research on how to do a profiling in Xcode and i found that Xcode has an addition to unit testing it provide the ability to measure the performance of a piece of code. This allow developers to gain insight into the specific timing infotmation of the code that being tested.</p>
+
+<h2>Performance Testing</h2>
+
+<p>With performance testing you can know the average time of execution for a piece of code. Also you can define a baseline exection time. This means that if the code that&rsquo;s being testd deviates from that baseline, the test fails. Xcode will repeatedly execute the code 10 times and measure the average execution time. To measure the measure the performance of a piece of code, use the &ldquo;measureBlock:&rdquo; API.
+This is one of the test cases i prepared:</p>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+<span class='line-number'>14</span>
+<span class='line-number'>15</span>
+</pre></td><td class='code'><pre><code class='swift'><span class='line'><span class="p">-</span> <span class="p">(</span><span class="kt">void</span><span class="p">)</span><span class="nf">testPerformanceExample</span> <span class="p">{</span>
+</span><span class='line'>    <span class="c1">// This is an example of a performance test case.</span>
+</span><span class='line'>    <span class="p">[</span><span class="nb">self</span> <span class="nl">measureBlock</span><span class="p">:</span><span class="o">^</span><span class="p">{</span>
+</span><span class='line'>        <span class="c1">// Put the code you want to measure the time of here.</span>
+</span><span class='line'>        <span class="n">XCTestExpectation</span> <span class="o">*</span><span class="n">completionExpectation</span> <span class="o">=</span> <span class="p">[</span><span class="nb">self</span> <span class="nl">expectationWithDescription</span><span class="p">:</span><span class="s">@&quot;Long method&quot;</span><span class="p">];</span>
+</span><span class='line'>        <span class="p">[</span><span class="nb">self</span><span class="p">.</span><span class="n">vcToTest</span> <span class="nl">doConvertFile</span><span class="p">:</span><span class="s">@&quot;&quot;</span> <span class="nl">withBlock</span><span class="p">:</span><span class="o">^</span><span class="p">(</span><span class="bp">NSString</span> <span class="o">*</span><span class="n">result</span><span class="p">)</span> <span class="p">{</span>
+</span><span class='line'>
+</span><span class='line'>            <span class="n">XCTAssertEqualObjects</span><span class="p">(</span><span class="s">@&quot;success&quot;</span><span class="p">,</span> <span class="n">result</span><span class="p">,</span> <span class="s">@&quot;Result was not correct!&quot;</span><span class="p">);</span>
+</span><span class='line'>            <span class="p">[</span><span class="n">completionExpectation</span> <span class="n">fulfill</span><span class="p">];</span>
+</span><span class='line'>
+</span><span class='line'>        <span class="p">}];</span>
+</span><span class='line'>
+</span><span class='line'>        <span class="p">[</span><span class="nb">self</span> <span class="nl">waitForExpectationsWithTimeout</span><span class="p">:</span><span class="mf">100.0</span> <span class="nl">handler</span><span class="p">:</span><span class="nb">nil</span><span class="p">];</span>
+</span><span class='line'>    <span class="p">}];</span>
+</span><span class='line'><span class="p">}</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>But what is XCTestExpectation in this block of code, Right this is a class that enable you to test Asyncronous code. The flow to test Asynchronous code is as follows, define an expectaion, wait for the expectation to be fulfilled, and fulfill the expectation when the asyncronous code finsish executing.</p>
+
+<p>Then i started to run the above test in Xcode and this was the result:
+<img class="left" src="images/performance_test_result.png" title="#2" ></p>
+
+<p>Now you can edit the baseline time of execution for the performance test.</p>
+</div>
+
+
+  <footer>
+    <p class="meta">
+      
+  
+
+<span class="byline author vcard">Posted by <span class="fn">Sameh Mabrouk</span></span>
+
+      
+
+
+
+
+<time class='entry-date' datetime='2015-08-27T02:48:33+02:00'><span class='date'><span class='date-month'>Aug</span> <span class='date-day'>27</span><span class='date-suffix'>th</span>, <span class='date-year'>2015</span></span> <span class='time'>2:48 am</span></time>
+      
+
+
+    </p>
+    
+      <div class="sharing">
+  
+  <a href="//twitter.com/share" class="twitter-share-button" data-url="http://isame7.github.io/blog/2015/08/27/performance-test-in-xcode/" data-via="" data-counturl="http://isame7.github.io/blog/2015/08/27/performance-test-in-xcode/" >Tweet</a>
+  
+  
+  
+</div>
+
+    
+    <p class="meta">
+      
+        <a class="basic-alignment left" href="/blog/2015/08/18/Git-source-control-in-xcode/" title="Previous Post: Git Source Control in Xcode">&laquo; Git Source Control in Xcode</a>
+      
+      
+        <a class="basic-alignment right" href="/blog/2015/08/30/symbolicating-ios-crash-reports/" title="Next Post: Symbolicating iOS Crash Reports">Symbolicating iOS Crash Reports &raquo;</a>
+      
+    </p>
+  </footer>
+</article>
+
+</div>
+
+<aside class="sidebar">
+  
+    <section>
+  <h1>Recent Posts</h1>
+  <ul id="recent_posts">
+    
+      <li class="post">
+        <a href="/blog/2015/08/30/symbolicating-ios-crash-reports/">Symbolicating iOS Crash Reports</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2015/08/27/performance-test-in-xcode/">Performance Test in Xcode</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2015/08/18/Git-source-control-in-xcode/">Git Source Control in Xcode</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2015/08/03/watchos-2-animations/">watchOS 2: Animations</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2015/07/14/how-i-built-parallax-effect-inspired-by-yahoo-weather-app/">How I Built Parallax Effect Inspired by Yahoo Weather</a>
+      </li>
+    
+  </ul>
+</section>
+
+
+
+
+
+  
+</aside>
+
+
+    </div>
+  </div>
+  <footer role="contentinfo"><p>
+  Copyright &copy; 2015 - Sameh Mabrouk -
+  <span class="credit">Powered by <a href="http://octopress.org">Octopress</a></span>
+</p>
+
+</footer>
+  
+
+
+
+
+
+
+
+  <script type="text/javascript">
+    (function(){
+      var twitterWidgets = document.createElement('script');
+      twitterWidgets.type = 'text/javascript';
+      twitterWidgets.async = true;
+      twitterWidgets.src = '//platform.twitter.com/widgets.js';
+      document.getElementsByTagName('head')[0].appendChild(twitterWidgets);
+    })();
+  </script>
+
+
+
+
+
+</body>
+</html>

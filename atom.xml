@@ -1,0 +1,392 @@
+<?xml version="1.0" encoding="utf-8"?>
+<feed xmlns="http://www.w3.org/2005/Atom">
+
+  <title><![CDATA[Smapps]]></title>
+  <link href="http://isame7.github.io/atom.xml" rel="self"/>
+  <link href="http://isame7.github.io/"/>
+  <updated>2015-09-28T16:15:52+02:00</updated>
+  <id>http://isame7.github.io/</id>
+  <author>
+    <name><![CDATA[Sameh Mabrouk]]></name>
+    
+  </author>
+  <generator uri="http://octopress.org/">Octopress</generator>
+
+  
+  <entry>
+    <title type="html"><![CDATA[Symbolicating iOS Crash Reports]]></title>
+    <link href="http://isame7.github.io/blog/2015/08/30/symbolicating-ios-crash-reports/"/>
+    <updated>2015-08-30T03:25:05+02:00</updated>
+    <id>http://isame7.github.io/blog/2015/08/30/symbolicating-ios-crash-reports</id>
+    <content type="html"><![CDATA[<p>It&rsquo;s often difficult to reproduce crashes reported from users, During your app beta testing, and even when you have apps on the App Store.
+Yesterday i faced an issue that my app works well in Debug mode on Xcode but it&rsquo;s crash when installing it from TestFlight and trying the same scenario on it. Unfrtuanalty i was integratting InstaBug &ldquo;it&rsquo;s a crash reporting tool&rdquo; but the trial period ended and no more crahses reported to me over email. So i have to do it manually. Luckily, iOS devices keep logs of each crash and can tell you the exact line of code that causes the problem. Let&rsquo;s take a look at a crash log for my app.</p>
+
+<p><img class="left" src="images/CrashReport.png" title="#2" ></p>
+
+<p>From the image above only the hex symbols of the objects and the memory addresses are there, So we need to symbolicate them.</p>
+
+<p>First, you need to have the .app and .dSYM for the build that generated the crash log.</p>
+
+<p>These are the following steps:</p>
+
+<p>Step1: Create a folder in desktop, and give it a name &ldquo;CrashReport&rdquo; and put three files (&ldquo;MyApp.app&rdquo;, &ldquo;MyApp.app.dSYM&rdquo;, MyApp.crash) in it.</p>
+
+<p>Step2: Open finder and got to Applications, find Xcode application, right click on it and click &ldquo;Show Package Contents&rdquo; Then follow this path,
+For Xcode 6 and above the path is Applications/Xcode.app/Contents/SharedFrameworks/DTDeviceKitBase.framework/Versions/A/Resources
+Where you find &ldquo;symbolicatecrash&rdquo; file , copy this and paste it to &ldquo;CrashReport&rdquo; folder.</p>
+
+<p>Step3:  launch the terminal, run these 3 Command</p>
+
+<p>cd /Users/UserName/Desktop/CrashLog and press Enter button</p>
+
+<p>export DEVELOPER_DIR=&ldquo;/Applications/Xcode.app/Contents/Developer&rdquo; and press Enter</p>
+
+<p>./symbolicatecrash -A -v MYApp_2013-07-18.crash MyApp.app.dSYM and press Enter Now its Done..
+(NOTE: versions around 6.4 or later do not have the -A option &ndash; just leave it out)</p>
+
+<p>Now you should see a lovely, symbolicated crash report in the terminal:</p>
+
+<p><img class="left" src="images/SymbolicatedCrashReport.png" title="#2" ></p>
+
+<p>Happy Coding :)</p>
+]]></content>
+  </entry>
+  
+  <entry>
+    <title type="html"><![CDATA[Performance Test in Xcode]]></title>
+    <link href="http://isame7.github.io/blog/2015/08/27/performance-test-in-xcode/"/>
+    <updated>2015-08-27T02:48:33+02:00</updated>
+    <id>http://isame7.github.io/blog/2015/08/27/performance-test-in-xcode</id>
+    <content type="html"><![CDATA[<p>Yesterday i recieved a JIRA issue from QA that the iOS application is very slow apparently the issue was in application services(API) being very slow to perform any operation.
+I started to investigate in the issue and there was a use case that the user select a file then there was a 2 API that should be called to process this file to be previewed in PDF previewer, So i started to think about a way to calculate the time the process it takes starting from selecting the file untile it&rsquo;s previewed. i eneded up with profiling and therfore i did some research on how to do a profiling in Xcode and i found that Xcode has an addition to unit testing it provide the ability to measure the performance of a piece of code. This allow developers to gain insight into the specific timing infotmation of the code that being tested.</p>
+
+<h2>Performance Testing</h2>
+
+<p>With performance testing you can know the average time of execution for a piece of code. Also you can define a baseline exection time. This means that if the code that&rsquo;s being testd deviates from that baseline, the test fails. Xcode will repeatedly execute the code 10 times and measure the average execution time. To measure the measure the performance of a piece of code, use the &ldquo;measureBlock:&rdquo; API.
+This is one of the test cases i prepared:</p>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+<span class='line-number'>14</span>
+<span class='line-number'>15</span>
+</pre></td><td class='code'><pre><code class='swift'><span class='line'><span class="p">-</span> <span class="p">(</span><span class="kt">void</span><span class="p">)</span><span class="nf">testPerformanceExample</span> <span class="p">{</span>
+</span><span class='line'>    <span class="c1">// This is an example of a performance test case.</span>
+</span><span class='line'>    <span class="p">[</span><span class="nb">self</span> <span class="nl">measureBlock</span><span class="p">:</span><span class="o">^</span><span class="p">{</span>
+</span><span class='line'>        <span class="c1">// Put the code you want to measure the time of here.</span>
+</span><span class='line'>        <span class="n">XCTestExpectation</span> <span class="o">*</span><span class="n">completionExpectation</span> <span class="o">=</span> <span class="p">[</span><span class="nb">self</span> <span class="nl">expectationWithDescription</span><span class="p">:</span><span class="s">@&quot;Long method&quot;</span><span class="p">];</span>
+</span><span class='line'>        <span class="p">[</span><span class="nb">self</span><span class="p">.</span><span class="n">vcToTest</span> <span class="nl">doConvertFile</span><span class="p">:</span><span class="s">@&quot;&quot;</span> <span class="nl">withBlock</span><span class="p">:</span><span class="o">^</span><span class="p">(</span><span class="bp">NSString</span> <span class="o">*</span><span class="n">result</span><span class="p">)</span> <span class="p">{</span>
+</span><span class='line'>
+</span><span class='line'>            <span class="n">XCTAssertEqualObjects</span><span class="p">(</span><span class="s">@&quot;success&quot;</span><span class="p">,</span> <span class="n">result</span><span class="p">,</span> <span class="s">@&quot;Result was not correct!&quot;</span><span class="p">);</span>
+</span><span class='line'>            <span class="p">[</span><span class="n">completionExpectation</span> <span class="n">fulfill</span><span class="p">];</span>
+</span><span class='line'>
+</span><span class='line'>        <span class="p">}];</span>
+</span><span class='line'>
+</span><span class='line'>        <span class="p">[</span><span class="nb">self</span> <span class="nl">waitForExpectationsWithTimeout</span><span class="p">:</span><span class="mf">100.0</span> <span class="nl">handler</span><span class="p">:</span><span class="nb">nil</span><span class="p">];</span>
+</span><span class='line'>    <span class="p">}];</span>
+</span><span class='line'><span class="p">}</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>But what is XCTestExpectation in this block of code, Right this is a class that enable you to test Asyncronous code. The flow to test Asynchronous code is as follows, define an expectaion, wait for the expectation to be fulfilled, and fulfill the expectation when the asyncronous code finsish executing.</p>
+
+<p>Then i started to run the above test in Xcode and this was the result:
+<img class="left" src="images/performance_test_result.png" title="#2" ></p>
+
+<p>Now you can edit the baseline time of execution for the performance test.</p>
+]]></content>
+  </entry>
+  
+  <entry>
+    <title type="html"><![CDATA[Git Source Control in Xcode]]></title>
+    <link href="http://isame7.github.io/blog/2015/08/18/Git-source-control-in-xcode/"/>
+    <updated>2015-08-18T18:51:56+02:00</updated>
+    <id>http://isame7.github.io/blog/2015/08/18/Git-source-control-in-xcode</id>
+    <content type="html"><![CDATA[<p>It&rsquo;s obvious that adding a Git repository to a project is totally effortless using Xcode. However, what happens if you don&rsquo;t include a Git repo during a project setup, or if you want to add one at a later time? Well, the good news is that you can add a repo for your project at any time, but without using Xcode.</p>
+
+<p>Befor demonstrating anything, you must download the Command line tools through Xcode, as we are going to work in terminal and we need some extra tools available. to install the command line tools, goto the Xcode > Preferences&hellip; menu on Xcode, and then select the Downloads tab. In the upper side of the window, under the Components section, click on the button with a down arrow existing at the right side of the Commnad line Tools options. Once the download is over, a checkmark will appear instead of the download button.</p>
+
+<p>Now, create Xcode project for the sake of this example. make sure to deselect the Create git repository options. We don&rsquo;t want Xcode to prepare a repository for us in this case. Name the project and save it in your Desktop, so you can follow along with the commands i will show.</p>
+
+<p>Once everything is ready, open a Terminal window(if you have already opend any, make sure to close it first, so any changes made by installing the command line tools to be applied). For starters, navigate your self to the new project&rsquo;s directory:</p>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class='swift'><span class='line'><span class="n">cd</span> <span class="o">/</span><span class="n">users</span><span class="o">/</span><span class="n">YOUR</span><span class="o">-</span><span class="n">USERNAME</span><span class="o">/</span><span class="n">Desktop</span><span class="o">/</span><span class="n">ProjectName</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class='swift'><span class='line'><span class="n">git</span> <span class="k">init</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>This will initialize an empty repo, and if you either go to Finder or use the ls terminal command, you&rsquo;ll see that the .git sub-directory has been created. Cool. Keep going:</p>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class='swift'><span class='line'><span class="n">git</span> <span class="n">add</span><span class="p">.</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>With this one, all contents of the current directory(the dot [.] symbol) will be added to the repo.
+Finally commit all(make the changes permanent):</p>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class='swift'><span class='line'><span class="n">git</span> <span class="n">commit</span> <span class="o">-</span><span class="n">m</span> <span class="err">&#39;</span><span class="n">initial</span> <span class="n">commit</span><span class="err">&#39;</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>A list of all files commited to the local git repo will appear to the terminal window. the next screen illustrates my terminal:</p>
+
+<p><img class="left" src="images/git-screenshot.png" title="#2" ></p>
+]]></content>
+  </entry>
+  
+  <entry>
+    <title type="html"><![CDATA[watchOS 2: Animations]]></title>
+    <link href="http://isame7.github.io/blog/2015/08/03/watchos-2-animations/"/>
+    <updated>2015-08-03T00:43:06+02:00</updated>
+    <id>http://isame7.github.io/blog/2015/08/03/watchos-2-animations</id>
+    <content type="html"><![CDATA[<p>The new operating system for Apple Watch, watchOS 2, was introduced a couple of weeks ago at WWDC 2015. It brings a lot of improvements, mostly for developers looking to create an Apple Watch app. These are the things that I find to be most important for developers:</p>
+
+<ul>
+<li>WatchKit apps are now running natively on the watch. This brings the much needed improvement in speed, resulting in a better user experience.</li>
+<li>The new Watch Connectivity framework enables all sorts of communication and data sharing between the parent iOS app and the watchOS app.</li>
+<li>watchOS 2 apps have access to hardware data, such as data from the motion sensor, audio recording, and they can even access heart rate data.</li>
+<li>watchOS 2 also introduced animations. On watchOS 1, the only option to perform an animation was to generate a series of images and then iterate through them. watchOS 2 brings true animations to the Apple Watch. You can animate the user interface by changing layout properties inside an animation block. That’s where this tutorial comes in.</li>
+</ul>
+
+
+<h2>1. Why Care About Animations?</h2>
+
+<p>Before we get to the nuts and bolts, I’d like to spend a minute talking about the purpose of animations on Apple Watch apps.</p>
+
+<p>The obvious reason is that they make the user interface more enjoyable if used appropriately. And when it comes to Apple Watch, that is a big if. Since most app interactions only last for a few seconds, you really don’t want to go overboard with animations.</p>
+
+<p>The second, and I believe more important reason, is that they allow for custom navigation hierarchies inside Apple Watch apps. Let&rsquo;s suppose you need to present a screen that the user can only leave by taking a specific action. Normally, Apple Watch apps always have a cancel button in the top left corner when a modal interface controller is presented. With animations and clever layout manipulation, you could create your own &ldquo;present view controller&rdquo; routine that shows your app&rsquo;s content full-screen, dismissing it by that specific action. That is one of the things you’ll learn in this tutorial.</p>
+
+<h2>Basics</h2>
+
+<p>//Describe the animation in watchOS 1</p>
+
+<p>The principle of animations on watchOS 2 is simple, you set one or more of the animatable properties inside an animation block. The following example illustrates how this works.</p>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+</pre></td><td class='code'><pre><code class='swift'><span class='line'><span class="p">[</span><span class="nb">self</span> <span class="nl">animateWithDuration</span><span class="p">:</span><span class="mf">0.5</span> <span class="nl">animations</span><span class="p">:</span><span class="o">^</span><span class="p">{</span>
+</span><span class='line'>    <span class="p">[</span><span class="nb">self</span><span class="p">.</span><span class="n">circleGroup</span> <span class="nl">setHorizontalAlignment</span><span class="p">:</span><span class="n">WKInterfaceObjectHorizontalAlignmentRight</span><span class="p">];</span>
+</span><span class='line'><span class="p">}];</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>This method causes the circleGroup to be aligned to the right, with an animation with a duration of 0.5 seconds. As you can see, we are calling animateWithDuration:animations: on self, which is an instance of WKInterfaceController. This is different from iOS where the animation methods are class methods on UIView.</p>
+
+<p>The below list shows which properties are animatable:</p>
+
+<p>.opacity</p>
+
+<p>.alignment</p>
+
+<p>.width and height</p>
+
+<p>.background color</p>
+
+<p>.color and tint color</p>
+
+<p>Bear in mind that it’s still not possible on watchOS 2 to create user interface elements at runtime. But since you can hide them or set their alpha to 0 in the storyboard, this shouldn’t be that big of a problem.</p>
+
+<p>That’s it. Armed with your knowledge about the WatchKit layout system, you are now ready to start working with native animations on watchOS. Let’s get started by creating a sample app so I can show you a couple of examples of how this all fits together.</p>
+]]></content>
+  </entry>
+  
+  <entry>
+    <title type="html"><![CDATA[How I Built Parallax Effect Inspired by Yahoo Weather]]></title>
+    <link href="http://isame7.github.io/blog/2015/07/14/how-i-built-parallax-effect-inspired-by-yahoo-weather-app/"/>
+    <updated>2015-07-14T22:07:19+02:00</updated>
+    <id>http://isame7.github.io/blog/2015/07/14/how-i-built-parallax-effect-inspired-by-yahoo-weather-app</id>
+    <content type="html"><![CDATA[<p>One of the first projects Yahoo’s Marissa Mayer oversaw as CEO was the Yahoo Weather app. The app was so well received that it even ended up receiving a coveted Apple Design Award in 2013.</p>
+
+<p><img class="left" src="images/image_iphone6_gold_portrait.png" title="screenshot #1" ></p>
+
+<h2>Background:</h2>
+
+<p>I&rsquo;m a big fan of Yahoo weather app. I intented to replicate and generalize the approach they used for anyone going to use.</p>
+
+<h2>Implementation:</h2>
+
+<p>Glassy View is a subclass of UIView. It contains two UIScrollView, background and foreground. backgroundScrollView consists of two UIImageView, backgroundImageView and blurredImageView. The alpha of the blurred one changes as the background scrolls. And the background scrolls as the foreground scrolls(at a different rate). The foregroundScrollView consists of maskLayers and the foregroundContainerView(which is whatever you want it to be).</p>
+
+<h2>How to use:</h2>
+
+<ol>
+<li>Create an instance of GlassyScrollView init(frame: CGRect, backgroundImage:UIImage, blurredImage:UIImage, viewDistanceFromBottom:CGFloat, foregroundView:UIView) and add it as a subview to whereever you need it to be.</li>
+<li>backgroundImage is essential, pick whatever fancy image that makes all the difference.</li>
+<li>blurredBackgroundImage is not neccessary but you can provide your own custom one.</li>
+<li>viewDistanceFromBottom is how much your foregroundView is visible from the bottom (like Yahoo temperature)</li>
+<li>foregroundView this is the view that will contain all the info.</li>
+</ol>
+
+
+<h2>Parallax effect implementation:</h2>
+
+<p>To achieve the parallax horizontal effect just call func scrollHorizontalRatio(ratio:CGFloat) that control each backgroundScrollView&rsquo;s contentOffset while scrolling.</p>
+
+<p>The following 2 screenshots describe the behavior:</p>
+
+<p><img class="left" src="images/image_iphone6_gold_portrait-2.png" title="screenshot #2" >
+<img class="left" src="images/image_iphone6_gold_portrait-3.png" title="screenshot #3" ></p>
+
+<p>Just control the contentOffset of backgroundScrollView like this:</p>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+<span class='line-number'>14</span>
+<span class='line-number'>15</span>
+<span class='line-number'>16</span>
+<span class='line-number'>17</span>
+</pre></td><td class='code'><pre><code class='swift'><span class='line'><span class="k">func</span> <span class="nf">scrollViewDidScroll</span><span class="p">(</span><span class="nl">scrollView</span><span class="p">:</span> <span class="bp">UIScrollView</span><span class="p">)</span> <span class="p">{</span>
+</span><span class='line'>    <span class="k">let</span> <span class="nl">ratio</span><span class="p">:</span><span class="n">CGFloat</span> <span class="o">=</span> <span class="n">scrollView</span><span class="p">.</span><span class="n">contentOffset</span><span class="p">.</span><span class="n">x</span><span class="o">/</span><span class="n">scrollView</span><span class="p">.</span><span class="n">frame</span><span class="p">.</span><span class="n">size</span><span class="p">.</span><span class="n">width</span>
+</span><span class='line'>    <span class="n">page</span><span class="o">=</span><span class="n">ratio</span>
+</span><span class='line'>
+</span><span class='line'>    <span class="k">if</span> <span class="n">ratio</span> <span class="o">&gt;</span> <span class="o">-</span><span class="mi">1</span> <span class="o">&amp;&amp;</span> <span class="n">ratio</span> <span class="o">&lt;</span> <span class="mi">1</span> <span class="p">{</span>
+</span><span class='line'>
+</span><span class='line'>        <span class="n">glassScrollView1</span><span class="p">.</span><span class="n">scrollHorizontalRatio</span><span class="p">(</span><span class="o">-</span><span class="n">ratio</span><span class="p">)</span>
+</span><span class='line'>    <span class="p">}</span>
+</span><span class='line'>    <span class="k">if</span> <span class="n">ratio</span> <span class="o">&gt;</span> <span class="mi">0</span> <span class="o">&amp;&amp;</span> <span class="n">ratio</span> <span class="o">&lt;</span> <span class="mi">2</span> <span class="p">{</span>
+</span><span class='line'>
+</span><span class='line'>        <span class="n">glassScrollView2</span><span class="p">.</span><span class="n">scrollHorizontalRatio</span><span class="p">(</span><span class="o">-</span><span class="n">ratio</span> <span class="o">+</span> <span class="mi">1</span><span class="p">)</span>
+</span><span class='line'>    <span class="p">}</span>
+</span><span class='line'>    <span class="k">if</span> <span class="n">ratio</span> <span class="o">&gt;</span> <span class="mi">1</span> <span class="o">&amp;&amp;</span> <span class="n">ratio</span> <span class="o">&lt;</span> <span class="mi">3</span> <span class="p">{</span>
+</span><span class='line'>
+</span><span class='line'>        <span class="n">glassScrollView3</span><span class="p">.</span><span class="n">scrollHorizontalRatio</span><span class="p">(</span><span class="o">-</span><span class="n">ratio</span> <span class="o">+</span> <span class="mi">2</span><span class="p">)</span>
+</span><span class='line'>    <span class="p">}</span>
+</span><span class='line'><span class="p">}</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+</pre></td><td class='code'><pre><code class='swift'><span class='line'><span class="k">func</span> <span class="nf">scrollHorizontalRatio</span><span class="p">(</span><span class="nl">ratio</span><span class="p">:</span><span class="n">CGFloat</span><span class="p">){</span>
+</span><span class='line'>    <span class="c1">// when the view scroll horizontally, this works the parallax magic</span>
+</span><span class='line'>    <span class="n">backgroundScrollView</span><span class="p">.</span><span class="n">contentOffset</span> <span class="o">=</span> <span class="n">CGPointMake</span><span class="p">(</span><span class="n">maxBackgroundMovementHorizontal</span><span class="o">+</span><span class="n">ratio</span><span class="o">*</span><span class="n">maxBackgroundMovementHorizontal</span><span class="p">,</span>     <span class="n">backgroundScrollView</span><span class="p">.</span><span class="n">contentOffset</span><span class="p">.</span><span class="n">y</span><span class="p">)</span>
+</span><span class='line'><span class="p">}</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<h2>Scrolling all foregroundScrollViews Vertically to the same point implementation:</h2>
+
+<p>To simulate the same behavior achieved by Yahoo&rsquo;s Weather app that scroll all foregroundScrollViews Vertically to the same point, just control the contentOffset of foregroundScrollView and change offsetY accordingly.</p>
+
+<p>So let&rsquo;s assume that you scrolle one of the foregroundScrollViews vertically so then all foregroundScrollViews(others foregroundScrollViews 2 foregroundScrollViews in our case) should be scrolled vertically to the same point(offsetY) accordingly.</p>
+
+<p>The following screenshot describe the behavior:</p>
+
+<p><img class="left" src="images/image_iphone6_gold_portrait-1.png" title="screenshot #4" ></p>
+
+<p>Start by calling scrollVerticallyToOffset(offsetY:CGFloat) for each glassScrollView in scrollViewWillBeginDragging:</p>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+</pre></td><td class='code'><pre><code class='swift'><span class='line'><span class="k">func</span> <span class="nf">scrollViewWillBeginDragging</span><span class="p">(</span><span class="nl">scrollView</span><span class="p">:</span> <span class="bp">UIScrollView</span><span class="p">)</span> <span class="p">{</span>
+</span><span class='line'>
+</span><span class='line'>    <span class="k">let</span> <span class="nl">glass</span><span class="p">:</span><span class="n">GlassyScrollView</span> <span class="o">=</span> <span class="n">currentGlass</span><span class="p">()</span>
+</span><span class='line'>
+</span><span class='line'>    <span class="c1">//this is just a demonstration without optimization</span>
+</span><span class='line'>    <span class="n">glassScrollView1</span><span class="p">.</span><span class="n">scrollVerticallyToOffset</span><span class="p">(</span><span class="n">glass</span><span class="p">.</span><span class="n">foregroundScrollView</span><span class="p">.</span><span class="n">contentOffset</span><span class="p">.</span><span class="n">y</span><span class="p">)</span>
+</span><span class='line'>    <span class="n">glassScrollView2</span><span class="p">.</span><span class="n">scrollVerticallyToOffset</span><span class="p">(</span><span class="n">glass</span><span class="p">.</span><span class="n">foregroundScrollView</span><span class="p">.</span><span class="n">contentOffset</span><span class="p">.</span><span class="n">y</span><span class="p">)</span>
+</span><span class='line'>    <span class="n">glassScrollView3</span><span class="p">.</span><span class="n">scrollVerticallyToOffset</span><span class="p">(</span><span class="n">glass</span><span class="p">.</span><span class="n">foregroundScrollView</span><span class="p">.</span><span class="n">contentOffset</span><span class="p">.</span><span class="n">y</span><span class="p">)</span>
+</span><span class='line'><span class="p">}</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>Then get the current Glassy scrollview:</p>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+<span class='line-number'>14</span>
+<span class='line-number'>15</span>
+<span class='line-number'>16</span>
+<span class='line-number'>17</span>
+</pre></td><td class='code'><pre><code class='swift'><span class='line'><span class="k">func</span> <span class="n">currentGlassyScrollView</span><span class="p">()</span> <span class="o">-&gt;</span><span class="n">GlassyScrollView</span><span class="p">{</span>
+</span><span class='line'>
+</span><span class='line'>    <span class="k">var</span> <span class="nl">glass</span><span class="p">:</span><span class="n">GlassyScrollView</span><span class="o">=</span><span class="n">glassScrollView1</span>
+</span><span class='line'>
+</span><span class='line'>    <span class="k">switch</span> <span class="n">page</span><span class="p">{</span>
+</span><span class='line'>    <span class="k">case</span> <span class="mi">0</span><span class="o">:</span>
+</span><span class='line'>        <span class="n">glass</span> <span class="o">=</span> <span class="n">glassScrollView1</span>
+</span><span class='line'>    <span class="k">case</span> <span class="mi">1</span><span class="o">:</span>
+</span><span class='line'>        <span class="n">glass</span> <span class="o">=</span> <span class="n">glassScrollView2</span>
+</span><span class='line'>    <span class="k">case</span> <span class="mi">2</span><span class="o">:</span>
+</span><span class='line'>        <span class="n">glass</span> <span class="o">=</span> <span class="n">glassScrollView3</span>
+</span><span class='line'>    <span class="k">default</span><span class="o">:</span>
+</span><span class='line'>        <span class="k">break</span>
+</span><span class='line'>
+</span><span class='line'>    <span class="p">}</span>
+</span><span class='line'>    <span class="k">return</span> <span class="n">glass</span>
+</span><span class='line'><span class="p">}</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>And then call scrollVerticallyToOffset(offsetY:CGFloat) to change the contentOffset of foregroundScrollView accordingly:</p>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+</pre></td><td class='code'><pre><code class='swift'><span class='line'><span class="k">func</span> <span class="nf">scrollVerticallyToOffset</span><span class="p">(</span><span class="nl">offsetY</span><span class="p">:</span><span class="n">CGFloat</span><span class="p">){</span>
+</span><span class='line'>
+</span><span class='line'>    <span class="n">foregroundScrollView</span><span class="p">.</span><span class="n">contentOffset</span><span class="o">=</span><span class="n">CGPointMake</span><span class="p">(</span><span class="n">foregroundScrollView</span><span class="p">.</span><span class="n">contentOffset</span><span class="p">.</span><span class="n">x</span><span class="p">,</span> <span class="n">offsetY</span><span class="p">)</span>
+</span><span class='line'><span class="p">}</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>Check out Glassy control on <a href="https://github.com/iSame7/Glassy">GitHub</a>.</p>
+]]></content>
+  </entry>
+  
+</feed>

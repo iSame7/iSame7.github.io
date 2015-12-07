@@ -1,0 +1,367 @@
+
+<!DOCTYPE html>
+<!--[if IEMobile 7 ]><html class="no-js iem7"><![endif]-->
+<!--[if lt IE 9]><html class="no-js lte-ie8"><![endif]-->
+<!--[if (gt IE 8)|(gt IEMobile 7)|!(IEMobile)|!(IE)]><!--><html class="no-js" lang="en"><!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  <title>How I Built Parallax Effect Inspired by Yahoo Weather - Smapps</title>
+  <meta name="author" content="Sameh Mabrouk">
+
+  
+  <meta name="description" content="One of the first projects Yahoo’s Marissa Mayer oversaw as CEO was the Yahoo Weather app. The app was so well received that it even ended up &hellip;">
+  
+
+  <!-- http://t.co/dKP3o1e -->
+  <meta name="HandheldFriendly" content="True">
+  <meta name="MobileOptimized" content="320">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  
+  <link rel="canonical" href="http://isame7.github.io/blog/2015/07/14/how-i-built-parallax-effect-inspired-by-yahoo-weather-app/">
+  <link href="/favicon.png" rel="icon">
+  <link href="/stylesheets/screen.css" media="screen, projection" rel="stylesheet" type="text/css">
+  <link href="/atom.xml" rel="alternate" title="Smapps" type="application/atom+xml">
+  <script src="/javascripts/modernizr-2.0.js"></script>
+  <script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+  <script>!window.jQuery && document.write(unescape('%3Cscript src="/javascripts/libs/jquery.min.js"%3E%3C/script%3E'))</script>
+  <script src="/javascripts/octopress.js" type="text/javascript"></script>
+  <!--Fonts from Google"s Web font directory at http://google.com/webfonts -->
+<link href="//fonts.googleapis.com/css?family=PT+Serif:regular,italic,bold,bolditalic" rel="stylesheet" type="text/css">
+<link href="//fonts.googleapis.com/css?family=PT+Sans:regular,italic,bold,bolditalic" rel="stylesheet" type="text/css">
+
+  
+
+</head>
+
+<body   >
+  <header role="banner"><hgroup>
+  <h1><a href="/">Smapps</a></h1>
+  
+    <h2>snitch tech stuff from here and there!</h2>
+  
+</hgroup>
+
+</header>
+  <nav role="navigation"><ul class="subscription" data-subscription="rss">
+  <li><a href="/atom.xml" rel="subscribe-rss" title="subscribe via RSS">RSS</a></li>
+  
+</ul>
+  
+<form action="https://www.google.com/search" method="get">
+  <fieldset role="search">
+    <input type="hidden" name="sitesearch" value="isame7.github.io">
+    <input class="search" type="text" name="q" results="0" placeholder="Search"/>
+  </fieldset>
+</form>
+  
+<ul class="main-navigation">
+  <li><a href="/">Blog</a></li>
+  <li><a href="/Roudybag">Projects</a></li>
+  <li><a href="/blog/archives">Archives</a></li>
+</ul>
+
+</nav>
+  <div id="main">
+    <div id="content">
+      <div>
+<article class="hentry" role="article">
+  
+  <header>
+    
+      <h1 class="entry-title">How I Built Parallax Effect Inspired by Yahoo Weather</h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+<time class='entry-date' datetime='2015-07-14T22:07:19+02:00'><span class='date'><span class='date-month'>Jul</span> <span class='date-day'>14</span><span class='date-suffix'>th</span>, <span class='date-year'>2015</span></span> <span class='time'>10:07 pm</span></time>
+        
+      </p>
+    
+  </header>
+
+
+<div class="entry-content"><p>One of the first projects Yahoo’s Marissa Mayer oversaw as CEO was the Yahoo Weather app. The app was so well received that it even ended up receiving a coveted Apple Design Award in 2013.</p>
+
+<p><img class="left" src="images/image_iphone6_gold_portrait.png" title="screenshot #1" ></p>
+
+<h2>Background:</h2>
+
+<p>I&rsquo;m a big fan of Yahoo weather app. I intented to replicate and generalize the approach they used for anyone going to use.</p>
+
+<h2>Implementation:</h2>
+
+<p>Glassy View is a subclass of UIView. It contains two UIScrollView, background and foreground. backgroundScrollView consists of two UIImageView, backgroundImageView and blurredImageView. The alpha of the blurred one changes as the background scrolls. And the background scrolls as the foreground scrolls(at a different rate). The foregroundScrollView consists of maskLayers and the foregroundContainerView(which is whatever you want it to be).</p>
+
+<h2>How to use:</h2>
+
+<ol>
+<li>Create an instance of GlassyScrollView init(frame: CGRect, backgroundImage:UIImage, blurredImage:UIImage, viewDistanceFromBottom:CGFloat, foregroundView:UIView) and add it as a subview to whereever you need it to be.</li>
+<li>backgroundImage is essential, pick whatever fancy image that makes all the difference.</li>
+<li>blurredBackgroundImage is not neccessary but you can provide your own custom one.</li>
+<li>viewDistanceFromBottom is how much your foregroundView is visible from the bottom (like Yahoo temperature)</li>
+<li>foregroundView this is the view that will contain all the info.</li>
+</ol>
+
+
+<h2>Parallax effect implementation:</h2>
+
+<p>To achieve the parallax horizontal effect just call func scrollHorizontalRatio(ratio:CGFloat) that control each backgroundScrollView&rsquo;s contentOffset while scrolling.</p>
+
+<p>The following 2 screenshots describe the behavior:</p>
+
+<p><img class="left" src="images/image_iphone6_gold_portrait-2.png" title="screenshot #2" >
+<img class="left" src="images/image_iphone6_gold_portrait-3.png" title="screenshot #3" ></p>
+
+<p>Just control the contentOffset of backgroundScrollView like this:</p>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+<span class='line-number'>14</span>
+<span class='line-number'>15</span>
+<span class='line-number'>16</span>
+<span class='line-number'>17</span>
+</pre></td><td class='code'><pre><code class='swift'><span class='line'><span class="k">func</span> <span class="nf">scrollViewDidScroll</span><span class="p">(</span><span class="nl">scrollView</span><span class="p">:</span> <span class="bp">UIScrollView</span><span class="p">)</span> <span class="p">{</span>
+</span><span class='line'>    <span class="k">let</span> <span class="nl">ratio</span><span class="p">:</span><span class="n">CGFloat</span> <span class="o">=</span> <span class="n">scrollView</span><span class="p">.</span><span class="n">contentOffset</span><span class="p">.</span><span class="n">x</span><span class="o">/</span><span class="n">scrollView</span><span class="p">.</span><span class="n">frame</span><span class="p">.</span><span class="n">size</span><span class="p">.</span><span class="n">width</span>
+</span><span class='line'>    <span class="n">page</span><span class="o">=</span><span class="n">ratio</span>
+</span><span class='line'>
+</span><span class='line'>    <span class="k">if</span> <span class="n">ratio</span> <span class="o">&gt;</span> <span class="o">-</span><span class="mi">1</span> <span class="o">&amp;&amp;</span> <span class="n">ratio</span> <span class="o">&lt;</span> <span class="mi">1</span> <span class="p">{</span>
+</span><span class='line'>
+</span><span class='line'>        <span class="n">glassScrollView1</span><span class="p">.</span><span class="n">scrollHorizontalRatio</span><span class="p">(</span><span class="o">-</span><span class="n">ratio</span><span class="p">)</span>
+</span><span class='line'>    <span class="p">}</span>
+</span><span class='line'>    <span class="k">if</span> <span class="n">ratio</span> <span class="o">&gt;</span> <span class="mi">0</span> <span class="o">&amp;&amp;</span> <span class="n">ratio</span> <span class="o">&lt;</span> <span class="mi">2</span> <span class="p">{</span>
+</span><span class='line'>
+</span><span class='line'>        <span class="n">glassScrollView2</span><span class="p">.</span><span class="n">scrollHorizontalRatio</span><span class="p">(</span><span class="o">-</span><span class="n">ratio</span> <span class="o">+</span> <span class="mi">1</span><span class="p">)</span>
+</span><span class='line'>    <span class="p">}</span>
+</span><span class='line'>    <span class="k">if</span> <span class="n">ratio</span> <span class="o">&gt;</span> <span class="mi">1</span> <span class="o">&amp;&amp;</span> <span class="n">ratio</span> <span class="o">&lt;</span> <span class="mi">3</span> <span class="p">{</span>
+</span><span class='line'>
+</span><span class='line'>        <span class="n">glassScrollView3</span><span class="p">.</span><span class="n">scrollHorizontalRatio</span><span class="p">(</span><span class="o">-</span><span class="n">ratio</span> <span class="o">+</span> <span class="mi">2</span><span class="p">)</span>
+</span><span class='line'>    <span class="p">}</span>
+</span><span class='line'><span class="p">}</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+</pre></td><td class='code'><pre><code class='swift'><span class='line'><span class="k">func</span> <span class="nf">scrollHorizontalRatio</span><span class="p">(</span><span class="nl">ratio</span><span class="p">:</span><span class="n">CGFloat</span><span class="p">){</span>
+</span><span class='line'>    <span class="c1">// when the view scroll horizontally, this works the parallax magic</span>
+</span><span class='line'>    <span class="n">backgroundScrollView</span><span class="p">.</span><span class="n">contentOffset</span> <span class="o">=</span> <span class="n">CGPointMake</span><span class="p">(</span><span class="n">maxBackgroundMovementHorizontal</span><span class="o">+</span><span class="n">ratio</span><span class="o">*</span><span class="n">maxBackgroundMovementHorizontal</span><span class="p">,</span>     <span class="n">backgroundScrollView</span><span class="p">.</span><span class="n">contentOffset</span><span class="p">.</span><span class="n">y</span><span class="p">)</span>
+</span><span class='line'><span class="p">}</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<h2>Scrolling all foregroundScrollViews Vertically to the same point implementation:</h2>
+
+<p>To simulate the same behavior achieved by Yahoo&rsquo;s Weather app that scroll all foregroundScrollViews Vertically to the same point, just control the contentOffset of foregroundScrollView and change offsetY accordingly.</p>
+
+<p>So let&rsquo;s assume that you scrolle one of the foregroundScrollViews vertically so then all foregroundScrollViews(others foregroundScrollViews 2 foregroundScrollViews in our case) should be scrolled vertically to the same point(offsetY) accordingly.</p>
+
+<p>The following screenshot describe the behavior:</p>
+
+<p><img class="left" src="images/image_iphone6_gold_portrait-1.png" title="screenshot #4" ></p>
+
+<p>Start by calling scrollVerticallyToOffset(offsetY:CGFloat) for each glassScrollView in scrollViewWillBeginDragging:</p>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+</pre></td><td class='code'><pre><code class='swift'><span class='line'><span class="k">func</span> <span class="nf">scrollViewWillBeginDragging</span><span class="p">(</span><span class="nl">scrollView</span><span class="p">:</span> <span class="bp">UIScrollView</span><span class="p">)</span> <span class="p">{</span>
+</span><span class='line'>
+</span><span class='line'>    <span class="k">let</span> <span class="nl">glass</span><span class="p">:</span><span class="n">GlassyScrollView</span> <span class="o">=</span> <span class="n">currentGlass</span><span class="p">()</span>
+</span><span class='line'>
+</span><span class='line'>    <span class="c1">//this is just a demonstration without optimization</span>
+</span><span class='line'>    <span class="n">glassScrollView1</span><span class="p">.</span><span class="n">scrollVerticallyToOffset</span><span class="p">(</span><span class="n">glass</span><span class="p">.</span><span class="n">foregroundScrollView</span><span class="p">.</span><span class="n">contentOffset</span><span class="p">.</span><span class="n">y</span><span class="p">)</span>
+</span><span class='line'>    <span class="n">glassScrollView2</span><span class="p">.</span><span class="n">scrollVerticallyToOffset</span><span class="p">(</span><span class="n">glass</span><span class="p">.</span><span class="n">foregroundScrollView</span><span class="p">.</span><span class="n">contentOffset</span><span class="p">.</span><span class="n">y</span><span class="p">)</span>
+</span><span class='line'>    <span class="n">glassScrollView3</span><span class="p">.</span><span class="n">scrollVerticallyToOffset</span><span class="p">(</span><span class="n">glass</span><span class="p">.</span><span class="n">foregroundScrollView</span><span class="p">.</span><span class="n">contentOffset</span><span class="p">.</span><span class="n">y</span><span class="p">)</span>
+</span><span class='line'><span class="p">}</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>Then get the current Glassy scrollview:</p>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+<span class='line-number'>14</span>
+<span class='line-number'>15</span>
+<span class='line-number'>16</span>
+<span class='line-number'>17</span>
+</pre></td><td class='code'><pre><code class='swift'><span class='line'><span class="k">func</span> <span class="n">currentGlassyScrollView</span><span class="p">()</span> <span class="o">-&gt;</span><span class="n">GlassyScrollView</span><span class="p">{</span>
+</span><span class='line'>
+</span><span class='line'>    <span class="k">var</span> <span class="nl">glass</span><span class="p">:</span><span class="n">GlassyScrollView</span><span class="o">=</span><span class="n">glassScrollView1</span>
+</span><span class='line'>
+</span><span class='line'>    <span class="k">switch</span> <span class="n">page</span><span class="p">{</span>
+</span><span class='line'>    <span class="k">case</span> <span class="mi">0</span><span class="o">:</span>
+</span><span class='line'>        <span class="n">glass</span> <span class="o">=</span> <span class="n">glassScrollView1</span>
+</span><span class='line'>    <span class="k">case</span> <span class="mi">1</span><span class="o">:</span>
+</span><span class='line'>        <span class="n">glass</span> <span class="o">=</span> <span class="n">glassScrollView2</span>
+</span><span class='line'>    <span class="k">case</span> <span class="mi">2</span><span class="o">:</span>
+</span><span class='line'>        <span class="n">glass</span> <span class="o">=</span> <span class="n">glassScrollView3</span>
+</span><span class='line'>    <span class="k">default</span><span class="o">:</span>
+</span><span class='line'>        <span class="k">break</span>
+</span><span class='line'>
+</span><span class='line'>    <span class="p">}</span>
+</span><span class='line'>    <span class="k">return</span> <span class="n">glass</span>
+</span><span class='line'><span class="p">}</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>And then call scrollVerticallyToOffset(offsetY:CGFloat) to change the contentOffset of foregroundScrollView accordingly:</p>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+</pre></td><td class='code'><pre><code class='swift'><span class='line'><span class="k">func</span> <span class="nf">scrollVerticallyToOffset</span><span class="p">(</span><span class="nl">offsetY</span><span class="p">:</span><span class="n">CGFloat</span><span class="p">){</span>
+</span><span class='line'>
+</span><span class='line'>    <span class="n">foregroundScrollView</span><span class="p">.</span><span class="n">contentOffset</span><span class="o">=</span><span class="n">CGPointMake</span><span class="p">(</span><span class="n">foregroundScrollView</span><span class="p">.</span><span class="n">contentOffset</span><span class="p">.</span><span class="n">x</span><span class="p">,</span> <span class="n">offsetY</span><span class="p">)</span>
+</span><span class='line'><span class="p">}</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>Check out Glassy control on <a href="https://github.com/iSame7/Glassy">GitHub</a>.</p>
+</div>
+
+
+  <footer>
+    <p class="meta">
+      
+  
+
+<span class="byline author vcard">Posted by <span class="fn">Sameh Mabrouk</span></span>
+
+      
+
+
+
+
+<time class='entry-date' datetime='2015-07-14T22:07:19+02:00'><span class='date'><span class='date-month'>Jul</span> <span class='date-day'>14</span><span class='date-suffix'>th</span>, <span class='date-year'>2015</span></span> <span class='time'>10:07 pm</span></time>
+      
+
+
+    </p>
+    
+      <div class="sharing">
+  
+  <a href="//twitter.com/share" class="twitter-share-button" data-url="http://isame7.github.io/blog/2015/07/14/how-i-built-parallax-effect-inspired-by-yahoo-weather-app/" data-via="" data-counturl="http://isame7.github.io/blog/2015/07/14/how-i-built-parallax-effect-inspired-by-yahoo-weather-app/" >Tweet</a>
+  
+  
+  
+</div>
+
+    
+    <p class="meta">
+      
+      
+        <a class="basic-alignment right" href="/blog/2015/08/03/watchos-2-animations/" title="Next Post: watchOS 2: Animations">watchOS 2: Animations &raquo;</a>
+      
+    </p>
+  </footer>
+</article>
+
+</div>
+
+<aside class="sidebar">
+  
+    <section>
+  <h1>Recent Posts</h1>
+  <ul id="recent_posts">
+    
+      <li class="post">
+        <a href="/blog/2015/08/30/symbolicating-ios-crash-reports/">Symbolicating iOS Crash Reports</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2015/08/27/performance-test-in-xcode/">Performance Test in Xcode</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2015/08/18/Git-source-control-in-xcode/">Git Source Control in Xcode</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2015/08/03/watchos-2-animations/">watchOS 2: Animations</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2015/07/14/how-i-built-parallax-effect-inspired-by-yahoo-weather-app/">How I Built Parallax Effect Inspired by Yahoo Weather</a>
+      </li>
+    
+  </ul>
+</section>
+
+
+
+
+
+  
+</aside>
+
+
+    </div>
+  </div>
+  <footer role="contentinfo"><p>
+  Copyright &copy; 2015 - Sameh Mabrouk -
+  <span class="credit">Powered by <a href="http://octopress.org">Octopress</a></span>
+</p>
+
+</footer>
+  
+
+
+
+
+
+
+
+  <script type="text/javascript">
+    (function(){
+      var twitterWidgets = document.createElement('script');
+      twitterWidgets.type = 'text/javascript';
+      twitterWidgets.async = true;
+      twitterWidgets.src = '//platform.twitter.com/widgets.js';
+      document.getElementsByTagName('head')[0].appendChild(twitterWidgets);
+    })();
+  </script>
+
+
+
+
+
+</body>
+</html>
