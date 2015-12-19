@@ -1,24 +1,26 @@
 <?xml version="1.0" encoding="utf-8"?>
 <feed xmlns="http://www.w3.org/2005/Atom">
 
-  <title><![CDATA[smapps]]></title>
-  <link href="http://isame7.github.io/atom.xml" rel="self"/>
-  <link href="http://isame7.github.io/"/>
-  <updated>2015-12-09T20:01:14+02:00</updated>
-  <id>http://isame7.github.io/</id>
+  <title><![CDATA[Sameh Mabrouk]]></title>
+  <link href="http://http://isame7.github.io/atom.xml" rel="self"/>
+  <link href="http://http://isame7.github.io/"/>
+  <updated>2015-12-19T15:11:21+02:00</updated>
+  <id>http://http://isame7.github.io/</id>
   <author>
     <name><![CDATA[Sameh Mabrouk]]></name>
     
   </author>
-  <generator uri="http://octopress.org/">Octopress</generator>
 
   
   <entry>
+    
     <title type="html"><![CDATA[Me and Scrum]]></title>
     <link href="http://isame7.github.io/blog/2015/12/07/me-and-scrum/"/>
+    
     <updated>2015-12-07T23:04:41+02:00</updated>
-    <id>http://isame7.github.io/blog/2015/12/07/me-and-scrum</id>
-    <content type="html"><![CDATA[<p>Today i heared about a tool from a friend of mine called Asana. Asana is the easiest way for teams to track their work. Asana has a a cool UI that make it easy to have a Scrum Boards.</p>
+    <id>http://http://isame7.github.io/blog/2015/12/07/me-and-scrum</id>
+    
+      <content type="html"><![CDATA[<p>Today i heared about a tool from a friend of mine called Asana. Asana is the easiest way for teams to track their work. Asana has a a cool UI that make it easy to have a Scrum Boards.</p>
 
 <h1>Explanation of Scrum:</h1>
 
@@ -65,14 +67,18 @@
 <p>4- Asana scrum board.
 <a href="https://github.com/chartbeat-labs/asana-scrum-board">Github</a></p>
 ]]></content>
+      
   </entry>
   
   <entry>
+    
     <title type="html"><![CDATA[Symbolicating iOS Crash Reports]]></title>
     <link href="http://isame7.github.io/blog/2015/08/30/symbolicating-ios-crash-reports/"/>
+    
     <updated>2015-08-30T03:25:05+02:00</updated>
-    <id>http://isame7.github.io/blog/2015/08/30/symbolicating-ios-crash-reports</id>
-    <content type="html"><![CDATA[<p>It&rsquo;s often difficult to reproduce crashes reported from users, During your app beta testing, and even when you have apps on the App Store.
+    <id>http://http://isame7.github.io/blog/2015/08/30/symbolicating-ios-crash-reports</id>
+    
+      <content type="html"><![CDATA[<p>It&rsquo;s often difficult to reproduce crashes reported from users, During your app beta testing, and even when you have apps on the App Store.
 Yesterday i faced an issue that my app works well in Debug mode on Xcode but it&rsquo;s crash when installing it from TestFlight and trying the same scenario on it. Unfrtuanalty i was integratting InstaBug &ldquo;it&rsquo;s a crash reporting tool&rdquo; but the trial period ended and no more crahses reported to me over email. So i have to do it manually. Luckily, iOS devices keep logs of each crash and can tell you the exact line of code that causes the problem. Let&rsquo;s take a look at a crash log for my app.</p>
 
 <p><img class="left" src="images/CrashReport.png" title="#2" ></p>
@@ -104,14 +110,18 @@ Where you find &ldquo;symbolicatecrash&rdquo; file , copy this and paste it to &
 
 <p>Happy Coding :)</p>
 ]]></content>
+      
   </entry>
   
   <entry>
+    
     <title type="html"><![CDATA[Performance Test in Xcode]]></title>
     <link href="http://isame7.github.io/blog/2015/08/27/performance-test-in-xcode/"/>
+    
     <updated>2015-08-27T02:48:33+02:00</updated>
-    <id>http://isame7.github.io/blog/2015/08/27/performance-test-in-xcode</id>
-    <content type="html"><![CDATA[<p>Yesterday i recieved a JIRA issue from QA that the iOS application is very slow apparently the issue was in application services(API) being very slow to perform any operation.
+    <id>http://http://isame7.github.io/blog/2015/08/27/performance-test-in-xcode</id>
+    
+      <content type="html"><![CDATA[<p>Yesterday i recieved a JIRA issue from QA that the iOS application is very slow apparently the issue was in application services(API) being very slow to perform any operation.
 I started to investigate in the issue and there was a use case that the user select a file then there was a 2 API that should be called to process this file to be previewed in PDF previewer, So i started to think about a way to calculate the time the process it takes starting from selecting the file untile it&rsquo;s previewed. i eneded up with profiling and therfore i did some research on how to do a profiling in Xcode and i found that Xcode has an addition to unit testing it provide the ability to measure the performance of a piece of code. This allow developers to gain insight into the specific timing infotmation of the code that being tested.</p>
 
 <h2>Performance Testing</h2>
@@ -159,14 +169,18 @@ This is one of the test cases i prepared:</p>
 
 <p>Now you can edit the baseline time of execution for the performance test.</p>
 ]]></content>
+      
   </entry>
   
   <entry>
+    
     <title type="html"><![CDATA[Git Source Control in Xcode]]></title>
     <link href="http://isame7.github.io/blog/2015/08/18/Git-source-control-in-xcode/"/>
+    
     <updated>2015-08-18T18:51:56+02:00</updated>
-    <id>http://isame7.github.io/blog/2015/08/18/Git-source-control-in-xcode</id>
-    <content type="html"><![CDATA[<p>It&rsquo;s obvious that adding a Git repository to a project is totally effortless using Xcode. However, what happens if you don&rsquo;t include a Git repo during a project setup, or if you want to add one at a later time? Well, the good news is that you can add a repo for your project at any time, but without using Xcode.</p>
+    <id>http://http://isame7.github.io/blog/2015/08/18/Git-source-control-in-xcode</id>
+    
+      <content type="html"><![CDATA[<p>It&rsquo;s obvious that adding a Git repository to a project is totally effortless using Xcode. However, what happens if you don&rsquo;t include a Git repo during a project setup, or if you want to add one at a later time? Well, the good news is that you can add a repo for your project at any time, but without using Xcode.</p>
 
 <p>Befor demonstrating anything, you must download the Command line tools through Xcode, as we are going to work in terminal and we need some extra tools available. to install the command line tools, goto the Xcode > Preferences&hellip; menu on Xcode, and then select the Downloads tab. In the upper side of the window, under the Components section, click on the button with a down arrow existing at the right side of the Commnad line Tools options. Once the download is over, a checkmark will appear instead of the download button.</p>
 
@@ -205,14 +219,18 @@ Finally commit all(make the changes permanent):</p>
 
 <p><img class="left" src="images/git-screenshot.png" title="#2" ></p>
 ]]></content>
+      
   </entry>
   
   <entry>
+    
     <title type="html"><![CDATA[watchOS 2: Animations]]></title>
     <link href="http://isame7.github.io/blog/2015/08/03/watchos-2-animations/"/>
+    
     <updated>2015-08-03T00:43:06+02:00</updated>
-    <id>http://isame7.github.io/blog/2015/08/03/watchos-2-animations</id>
-    <content type="html"><![CDATA[<p>The new operating system for Apple Watch, watchOS 2, was introduced a couple of weeks ago at WWDC 2015. It brings a lot of improvements, mostly for developers looking to create an Apple Watch app. These are the things that I find to be most important for developers:</p>
+    <id>http://http://isame7.github.io/blog/2015/08/03/watchos-2-animations</id>
+    
+      <content type="html"><![CDATA[<p>The new operating system for Apple Watch, watchOS 2, was introduced a couple of weeks ago at WWDC 2015. It brings a lot of improvements, mostly for developers looking to create an Apple Watch app. These are the things that I find to be most important for developers:</p>
 
 <ul>
 <li>WatchKit apps are now running natively on the watch. This brings the much needed improvement in speed, resulting in a better user experience.</li>
@@ -263,14 +281,18 @@ Finally commit all(make the changes permanent):</p>
 
 <p>That’s it. Armed with your knowledge about the WatchKit layout system, you are now ready to start working with native animations on watchOS. Let’s get started by creating a sample app so I can show you a couple of examples of how this all fits together.</p>
 ]]></content>
+      
   </entry>
   
   <entry>
-    <title type="html"><![CDATA[How I Built Parallax Effect Inspired by Yahoo Weather]]></title>
+    
+    <title type="html"><![CDATA[How i built Parallax effect Inspired by Yahoo Weather]]></title>
     <link href="http://isame7.github.io/blog/2015/07/14/how-i-built-parallax-effect-inspired-by-yahoo-weather-app/"/>
+    
     <updated>2015-07-14T22:07:19+02:00</updated>
-    <id>http://isame7.github.io/blog/2015/07/14/how-i-built-parallax-effect-inspired-by-yahoo-weather-app</id>
-    <content type="html"><![CDATA[<p>One of the first projects Yahoo’s Marissa Mayer oversaw as CEO was the Yahoo Weather app. The app was so well received that it even ended up receiving a coveted Apple Design Award in 2013.</p>
+    <id>http://http://isame7.github.io/blog/2015/07/14/how-i-built-parallax-effect-inspired-by-yahoo-weather-app</id>
+    
+      <content type="html"><![CDATA[<p>One of the first projects Yahoo’s Marissa Mayer oversaw as CEO was the Yahoo Weather app. The app was so well received that it even ended up receiving a coveted Apple Design Award in 2013.</p>
 
 <p><img class="left" src="images/image_iphone6_gold_portrait.png" title="screenshot #1" ></p>
 
@@ -441,6 +463,7 @@ Finally commit all(make the changes permanent):</p>
 
 <p>Check out Glassy control on <a href="https://github.com/iSame7/Glassy">GitHub</a>.</p>
 ]]></content>
+      
   </entry>
   
 </feed>
