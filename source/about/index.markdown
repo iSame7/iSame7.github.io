@@ -8,7 +8,7 @@ footer: true
 ---
 
 
-<img src="images/shape2.png" alt="undefined" style="height: 358px; left: 0px; margin-left: -1px; position: absolute; top: 0px; width: 680px; " title=""/>
+<img src="../images/shape2.png" alt="undefined" style="height: 358px; left: 0px; margin-left: -1px; position: absolute; top: 0px; width: 680px; " title=""/>
 <h1 style="margin-top: 350px">About Me</h1><p>I'm Sameh and I am an iOS Engineer, UX developer, software programmer, backend coder, aspiring entrepreneur and a graduate student, majoring in Computer Science. I am extremely passionate about iOS programming and apple's new programming language - Swift also i’m a passionate open source contributor where i build UI controls to others to use and learn from. I have recently developed two applications iOS & Apple Watch THE Snake Byte & TweetSpeak.
 https://itunes.apple.com/us/app/snake-byte-play-snake-game/id991617826?mt=8
 https://itunes.apple.com/us/app/tweetspeak/id917058248?mt=8
