@@ -1,0 +1,437 @@
+
+<!DOCTYPE HTML>
+<html lang="en-GB">
+<head>
+	<meta charset="utf-8">
+	<title>Persisting Structs in Swift  | Sameh Mabrouk</title>
+
+	<meta name="author" content="Sameh Mabrouk">
+
+<meta name="description" content="Today i have been assigned another JIRA issue by my product manager. This task is simply to mock the app data or to maintain a backup of the app data &hellip;"> <meta name="keywords" content="">
+
+	<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+
+	<link href="/atom.xml" rel="alternate" title="Sameh Mabrouk" type="application/atom+xml">
+	<link rel="canonical" href="">
+	<link href="/favicon.png" rel="shortcut icon">
+	<link href="/stylesheets/screen.css" media="screen, projection" rel="stylesheet" type="text/css">
+	<!--[if lt IE 9]><script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script><![endif]-->
+	<script src="//ajax.googleapis.com/ajax/libs/jquery/1.7.2/jquery.min.js"></script>
+	
+
+</head>
+
+
+
+<body>
+	<header id="header" class="inner"><h1><a href="/">Sameh Mabrouk</a></h1>
+<span class="tagline"></span>
+<nav id="main-nav"><ul class="main-nav">
+	<li><a href="/">Blog</a></li>
+	<li><a href="/about">About</a></li>
+	<li><a href="/archives">Archives</a></li>
+</ul>
+</nav> 
+<nav id="mobile-nav">
+ 	<div class="alignleft menu"> 
+ 		<a class="button">Menu</a> 
+ 		<div class="container"><ul class="main-nav">
+	<li><a href="/">Blog</a></li>
+	<li><a href="/about">About</a></li>
+	<li><a href="/archives">Archives</a></li>
+</ul>
+</div> 
+ 	</div> 
+ </nav> 
+
+
+</header>
+
+	<div id="content" class="inner"><article class="post">
+	<header>
+		
+		<h2 class="title">Persisting Structs in Swift</h2>
+		
+		<div class="meta date">
+
+
+
+<time class='entry-date' datetime='2016-03-16T01:50:06+02:00'><span class='date'><span class='date-month'>Mar</span> <span class='date-day'>16</span><span class='date-suffix'>th</span>, <span class='date-year'>2016</span></span></time></div>
+	</header>
+
+	<div class="entry-content"><p>Today i have been assigned another JIRA issue by my product manager. This task is simply to mock the app data or to maintain a backup of the app data like json retrieved from API.
+I just started to dig into the project code because i was newbie to this project and i found that our data models is written like Structs not Classes. The stroy started from here because that&rsquo;s made me to write this post.</p>
+
+<p>We all know the trivial way for persisting an object in Objective-C we start by making this object to confom to NSCoding protocol and then implementing the required methods for archiving and unarchiving objects, by that way our objects can be saved to NSUserDefaults.</p>
+
+<p>Unfortunately this can’t be done with Swift Structs because Structs cannot conform to NSCoding protocol.</p>
+
+<p>So&hellip;</p>
+
+<p>So this made me to think about a new way to persist this structs. if we can find a way to convert this struct to persisted object like dictionary.</p>
+
+<p>I&rsquo;m working now on Apple TV App (YAY), i&rsquo;ve never imagined that i&rsquo;ll develop in tv OS, However things happens. the project i&rsquo;m working on is a entertainment application like most Apple TV apps it display Video content so the home screen contain some recommendations video assets from our backend and it&rsquo;s displayed as Tiles in home screen, once the user clicks on any tiles he will be redirected to asset details screen that contain details about the video clicked[he can play video, brwose cast&amp;crew, Add to wishlist, etc]</p>
+
+<p>One of the functionality that our client requested is to be able to make the app working even the backend/server is down. So we have to persist these video assets data(recommendations,&hellip;) somewhere even if the user close that app and open it again.</p>
+
+<p>First of all i thought for multiple solutions for persisting these data:</p>
+
+<p>1- It make sense to use NSUserDefaults to save recommendations. As NSUserdefaults is a plists which is a NSDictionaries that can includes array, strings, numbers, and even NSDictionaries.
+2- I just thought to use a local json file that contain a backup json data the same data comming from backend.</p>
+
+<p>Finally i decided to use both solutions for persisting these data, So the application flow was as follows:</p>
+
+<p>call the API server to get the video assets data :</p>
+
+<p>if there is a response{</p>
+
+<p>// API server is responding.
+- open the app normally.
+- save the data locally in NSUserdefaults.
+}
+else {
+// no response from the API server.
+- check if there is a data stored locally in NSUserdefault {
+    load data from NSUserdefault.
+}
+else {
+    load data from the local json file.
+}
+}</p>
+
+<p>The beauty of this way is that in any case we have a mock data so our app can work any time our server is down. even if this is the first time the user open the app and the server down, don&rsquo;t worry the app will load the data from the local json file. Also we will have a updated mocked data because every time server is responding we save the new data in NSUserdefault so it&rsquo;s updated data.</p>
+
+<p>This too much information and out of scope now, sorry just thought i&rsquo;ve to share it with you!</p>
+
+<h2>Let&rsquo;s get back to the point, So we have to store an array of recommendations objects in NSUserDefaults so we can retrieve them any time.</h2>
+
+<p>The way we all know to make this happens was as follows:</p>
+
+<p>We use NSKeyArchiver the archiving functionality to achieve that.And by the way our data persistence were not large to use Core Data or SQLite.</p>
+
+<p>Archiving functionality has few parts. we have to conform to <strong>NSCoding</strong> protocol that requires to implement 2 methods <em>encodeWithCoder</em> and * initWithCoder* which is where we specify how to encode and decode data.</p>
+
+<p>Then we implement NSCoder protocol methods in our Recommendation class as follows:</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+<span class='line-number'>14</span>
+<span class='line-number'>15</span>
+<span class='line-number'>16</span>
+<span class='line-number'>17</span>
+<span class='line-number'>18</span>
+<span class='line-number'>19</span>
+<span class='line-number'>20</span>
+</pre></td><td class='code'><pre><code class='Objective-C'><span class='line'><span class="cp">#pragma mark NSCoding methods</span>
+</span><span class='line'>
+</span><span class='line'><span class="p">-</span> <span class="p">(</span><span class="kt">void</span><span class="p">)</span><span class="nf">encodeWithCoder:</span><span class="p">(</span><span class="bp">NSCoder</span> <span class="o">*</span><span class="p">)</span><span class="nv">coder</span><span class="p">;</span>
+</span><span class='line'><span class="p">{</span>
+</span><span class='line'>    <span class="k">if</span> <span class="p">(</span><span class="n">name</span> <span class="o">!=</span> <span class="nb">nil</span><span class="p">)</span> <span class="p">{</span>
+</span><span class='line'>        <span class="p">[</span><span class="n">coder</span> <span class="nl">encodeObject</span><span class="p">:</span><span class="n">entityId</span> <span class="nl">forKey</span><span class="p">:</span><span class="s">@&quot;entityId&quot;</span><span class="p">];</span>
+</span><span class='line'>        <span class="p">[</span><span class="n">coder</span> <span class="nl">encodeObject</span><span class="p">:</span><span class="n">entityType</span> <span class="nl">forKey</span><span class="p">:</span><span class="s">@&quot;entityType&quot;</span><span class="p">];</span>
+</span><span class='line'>        <span class="p">[</span><span class="n">coder</span> <span class="nl">encodeObject</span><span class="p">:</span><span class="n">entity</span> <span class="nl">forKey</span><span class="p">:</span><span class="s">@&quot;entity&quot;</span><span class="p">];</span>
+</span><span class='line'>    <span class="p">}</span>
+</span><span class='line'><span class="p">}</span>
+</span><span class='line'>
+</span><span class='line'><span class="o">-</span> <span class="p">(</span><span class="kt">instancetype</span><span class="p">)</span><span class="nl">initWithCoder</span><span class="p">:(</span><span class="bp">NSCoder</span> <span class="o">*</span><span class="p">)</span><span class="n">coder</span>
+</span><span class='line'><span class="p">{</span>
+</span><span class='line'>    <span class="k">if</span><span class="p">(</span><span class="nb">self</span> <span class="o">=</span> <span class="p">[</span><span class="nb">super</span> <span class="n">init</span><span class="p">])</span> <span class="p">{</span>
+</span><span class='line'>        <span class="nb">self</span><span class="p">.</span><span class="n">entityId</span> <span class="o">=</span> <span class="p">[</span><span class="n">coder</span> <span class="nl">decodeObjectForKey</span><span class="p">:</span><span class="s">@&quot;entityId&quot;</span><span class="p">];</span>
+</span><span class='line'>        <span class="nb">self</span><span class="p">.</span><span class="n">entityType</span> <span class="o">=</span> <span class="p">[</span><span class="n">coder</span> <span class="nl">decodeObjectForKey</span><span class="p">:</span><span class="s">@&quot;entityType&quot;</span><span class="p">];</span>
+</span><span class='line'>        <span class="nb">self</span><span class="p">.</span><span class="n">entity</span> <span class="o">=</span> <span class="p">[</span><span class="n">coder</span> <span class="nl">decodeObjectForKey</span><span class="p">:</span><span class="s">@&quot;entity&quot;</span><span class="p">];</span>
+</span><span class='line'>    <span class="p">}</span>
+</span><span class='line'>    <span class="k">return</span> <span class="nb">self</span><span class="p">;</span>
+</span><span class='line'><span class="p">}</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>This way serialize our Recommendation object and is convert into NSData, making it easy to be persisted.</p>
+
+<p>To store the encoded object as NSData we use NSKeyedArchiver archivedDataWithRootObject method as follows:</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+</pre></td><td class='code'><pre><code class='Objective-C'><span class='line'><span class="bp">NSData</span> <span class="o">*</span><span class="n">encodedWeatherData</span> <span class="o">=</span> <span class="p">[</span><span class="bp">NSKeyedArchiver</span> <span class="nl">archivedDataWithRootObject</span><span class="p">:</span><span class="n">recommendations</span><span class="p">];</span>
+</span><span class='line'><span class="p">[[</span><span class="bp">NSUserDefaults</span> <span class="n">standardUserDefaults</span><span class="p">]</span><span class="nl">setObject</span><span class="p">:</span><span class="n">encodedWeatherData</span> <span class="nl">forKey</span><span class="p">:@</span><span class="err">“</span><span class="n">recommnedations_data</span><span class="s">&quot;];</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>To decode the our recommendation model we have to search in NSUserdefaults for encoded object with the key “recommnedations_data” then decode and return it.</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+</pre></td><td class='code'><pre><code class='Objective-C'><span class='line'><span class="p">+</span> <span class="p">(</span><span class="bp">NSArray</span> <span class="o">*</span><span class="p">)</span><span class="nf">recommendations</span>
+</span><span class='line'><span class="p">{</span>
+</span><span class='line'>    <span class="bp">NSData</span> <span class="o">*</span><span class="n">encodedRecommendations</span> <span class="o">=</span> <span class="p">[[</span><span class="bp">NSUserDefaults</span> <span class="n">standardUserDefaults</span><span class="p">]</span><span class="nl">objectForKey</span><span class="p">:</span><span class="s">@&quot;recommnedations_data&quot;</span><span class="p">];</span>
+</span><span class='line'>    <span class="k">if</span><span class="p">(</span><span class="n">encodedRecommendations</span><span class="p">)</span> <span class="p">{</span>
+</span><span class='line'>        <span class="k">return</span> <span class="p">(</span><span class="bp">NSArray</span> <span class="o">*</span><span class="p">)[</span><span class="bp">NSKeyedUnarchiver</span> <span class="nl">unarchiveObjectWithData</span><span class="p">:</span><span class="n">encodedRecommendations</span><span class="p">];</span>
+</span><span class='line'>    <span class="p">}</span>
+</span><span class='line'>    <span class="k">return</span> <span class="nb">nil</span><span class="p">;</span>
+</span><span class='line'><span class="p">}</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<h1>Issues with this technique:</h1>
+
+<h2>NSCoding only works with objects inheriting from NSObject.</h2>
+
+<p>Currently in our Apple TV application we use Structs for the model layer so every model is basically a Struct. Actually our cannot conform to NSCoding protocol because it’s not inheriting from NSObject.</p>
+
+<p>As we have a lot of models in our app and we are taking advantages of the features of Structs, It doesn’t make sense to convert/rewrite our models (Recommendation) to objects rather than structs.</p>
+
+<h1>Swift Approach</h1>
+
+<p>How we solved the problem of persisting Structs in Swift? Since we can’t archive and unarchive them like classes inherits from NSObjects.</p>
+
+<p>Let’s spill out the the solution we can do:</p>
+
+<h1>Structs:</h1>
+
+<p>Recommendation model this is one of the models that we want to persist. this model is already implemented in the project as a Struct:</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+</pre></td><td class='code'><pre><code class='Objective-C'><span class='line'><span class="k">struct</span> <span class="n">Recommendation</span><span class="p">{</span>
+</span><span class='line'>
+</span><span class='line'>    <span class="n">var</span> <span class="nl">entityId</span><span class="p">:</span> <span class="bp">NSNumber</span><span class="o">?</span>
+</span><span class='line'>    <span class="n">var</span> <span class="nl">entityType</span><span class="p">:</span> <span class="n">EntityTypeEnum</span><span class="o">?</span>
+</span><span class='line'>    <span class="n">var</span> <span class="nl">entity</span><span class="p">:</span> <span class="n">EntityProtocol</span><span class="o">?</span>
+</span><span class='line'>
+</span><span class='line'>    <span class="n">init</span><span class="p">(</span><span class="nl">entityId</span><span class="p">:</span><span class="bp">NSNumber</span><span class="p">,</span> <span class="nl">entityType</span><span class="p">:</span> <span class="n">EntityTypeEnum</span><span class="p">,</span> <span class="nl">entity</span><span class="p">:</span> <span class="n">EntityProtocol</span><span class="o">?</span><span class="p">){</span>
+</span><span class='line'>
+</span><span class='line'>        <span class="nb">self</span><span class="p">.</span><span class="n">entityId</span>   <span class="o">=</span> <span class="n">entityId</span>
+</span><span class='line'>        <span class="nb">self</span><span class="p">.</span><span class="n">entityType</span> <span class="o">=</span> <span class="n">entityType</span>
+</span><span class='line'>        <span class="nb">self</span><span class="p">.</span><span class="n">entity</span>     <span class="o">=</span> <span class="n">entity</span>
+</span><span class='line'>    <span class="p">}</span>
+</span><span class='line'><span class="p">}</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>Now we need a way to persist our recommendation model, we have to convert our Struct to another object that can be persisted like NSDictionary.</p>
+
+<p>The idea is we can convert our Struct into NSDictionary object and then we can persist this NSDictionary into NSUserdefaults easily. and then we can extract this NSDictioanry from NSUserDefaults and brings it back into Recommendation instance.</p>
+
+<p>we did that using a Protocol we used a protocol to make it more generic for all models of the project. this protocol contain two methods, one method return an NSDictionary from Recommendation instance by going through the Recommendation instance and set key-value pairs for each of the variables and returns an NSDictionary.</p>
+
+<p>another method that takes NSDictioanry as parameter and return an instance of Recommendation model.</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+</pre></td><td class='code'><pre><code class='Objective-C'><span class='line'><span class="n">protocol</span> <span class="n">PropertyListReadable</span> <span class="p">{</span>
+</span><span class='line'>    <span class="n">func</span> <span class="n">propertyListRepresentation</span><span class="p">()</span> <span class="o">-&gt;</span> <span class="bp">NSDictionary</span>
+</span><span class='line'>    <span class="n">init</span><span class="o">?</span><span class="p">(</span><span class="nl">propertyListRepresentation</span><span class="p">:</span><span class="bp">NSDictionary</span><span class="o">?</span><span class="p">)</span>
+</span><span class='line'><span class="p">}</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>Now we can extend each Struct with protocol</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+<span class='line-number'>14</span>
+<span class='line-number'>15</span>
+<span class='line-number'>16</span>
+<span class='line-number'>17</span>
+<span class='line-number'>18</span>
+<span class='line-number'>19</span>
+<span class='line-number'>20</span>
+<span class='line-number'>21</span>
+<span class='line-number'>22</span>
+<span class='line-number'>23</span>
+<span class='line-number'>24</span>
+</pre></td><td class='code'><pre><code class='Objective-C'><span class='line'><span class="n">extension</span> <span class="nl">REMintRecommendationModel</span><span class="p">:</span> <span class="n">PropertyListReadable</span><span class="p">{</span>
+</span><span class='line'>
+</span><span class='line'>    <span class="n">func</span> <span class="n">propertyListRepresentation</span><span class="p">()</span> <span class="o">-&gt;</span> <span class="bp">NSDictionary</span> <span class="p">{</span>
+</span><span class='line'>
+</span><span class='line'>        <span class="n">var</span> <span class="n">representation</span> <span class="o">=</span> <span class="p">[</span><span class="nl">String</span> <span class="p">:</span> <span class="n">AnyObject</span><span class="p">]()</span>
+</span><span class='line'>        <span class="k">if</span> <span class="n">let</span> <span class="n">entityId</span> <span class="o">=</span> <span class="nb">self</span><span class="p">.</span><span class="n">entityId</span><span class="p">{</span>
+</span><span class='line'>            <span class="n">representation</span><span class="p">[</span><span class="s">&quot;entityId&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">entityId</span>
+</span><span class='line'>        <span class="p">}</span>
+</span><span class='line'>        <span class="k">if</span> <span class="n">let</span> <span class="n">type</span> <span class="o">=</span> <span class="nb">self</span><span class="p">.</span><span class="n">entityType</span><span class="p">{</span>
+</span><span class='line'>            <span class="n">representation</span><span class="p">[</span><span class="s">&quot;type&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">type</span><span class="p">.</span><span class="n">rawValue</span>
+</span><span class='line'>        <span class="p">}</span>
+</span><span class='line'>        <span class="k">if</span> <span class="n">let</span> <span class="n">entity</span> <span class="o">=</span> <span class="nb">self</span><span class="p">.</span><span class="n">entity</span><span class="p">{</span>
+</span><span class='line'>            <span class="n">representation</span><span class="p">[</span><span class="s">&quot;entity&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">entity</span><span class="p">.</span><span class="n">propertyListRepresentation</span><span class="p">()</span>
+</span><span class='line'>        <span class="p">}</span>
+</span><span class='line'>        <span class="k">return</span> <span class="n">representation</span>
+</span><span class='line'>    <span class="p">}</span>
+</span><span class='line'>
+</span><span class='line'>    <span class="n">init</span><span class="o">?</span><span class="p">(</span><span class="nl">propertyListRepresentation</span><span class="p">:</span><span class="bp">NSDictionary</span><span class="o">?</span><span class="p">)</span> <span class="p">{</span>
+</span><span class='line'>
+</span><span class='line'>        <span class="n">guard</span> <span class="n">let</span> <span class="n">values</span> <span class="o">=</span> <span class="n">propertyListRepresentation</span>
+</span><span class='line'>            <span class="k">else</span> <span class="p">{</span><span class="k">return</span> <span class="nb">nil</span><span class="p">}</span>
+</span><span class='line'>        <span class="nb">self</span> <span class="o">=</span>  <span class="n">Recommendation</span><span class="p">(</span><span class="nl">data</span><span class="p">:</span> <span class="n">values</span><span class="p">)</span>
+</span><span class='line'>    <span class="p">}</span>
+</span><span class='line'><span class="p">}</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<h2>Note: You may face a problem in your implementation is that you have another struct instance inside you Struct, No worries you have to follow the same approach all your persisted Structs must conform to PropertyListReadable protocol and then you can  propertyListRepresentation to get an NSDictionary for this Struct or return this Struct back from NSDictionary.</h2>
+
+<h1>Dealing with NSUerDefaults:</h1>
+
+<p>1- Extracting Structs from NSUerDefaults:</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+<span class='line-number'>14</span>
+</pre></td><td class='code'><pre><code class='Objective-C'><span class='line'>    <span class="cm">/**</span>
+</span><span class='line'><span class="cm">     Accept an Array of dictionaries and convert it back to Array of objects by converting each dictionary to object to be persisted in NSUserDefaults.</span>
+</span><span class='line'><span class="cm">     it accept an optional argument of an array of any object and returning an array of our generic return value. it also are specify our generic return value must conform to the PropertyListReadable protocol.</span>
+</span><span class='line'>
+</span><span class='line'><span class="cm">     - parameter [AnyObject]: the array of dictionaries to be converted.</span>
+</span><span class='line'><span class="cm">     - parameter key: The key with which to check if it has a value in NSUserDefaults.</span>
+</span><span class='line'><span class="cm">     - returns [T]: array of objects conforming to PropertyListReadable protocol.</span>
+</span><span class='line'>
+</span><span class='line'><span class="cm">     */</span>
+</span><span class='line'>    <span class="n">func</span> <span class="n">extractValuesFromPropertyListArray</span><span class="o">&lt;</span><span class="nl">T</span><span class="p">:</span><span class="n">PropertyListReadable</span><span class="o">&gt;</span><span class="p">(</span><span class="nl">propertyListArray</span><span class="p">:[</span><span class="n">AnyObject</span><span class="p">]</span><span class="o">?</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="p">[</span><span class="n">T</span><span class="p">]</span> <span class="p">{</span>
+</span><span class='line'>        <span class="n">guard</span> <span class="n">let</span> <span class="n">encodedArray</span> <span class="o">=</span> <span class="n">propertyListArray</span>
+</span><span class='line'>            <span class="k">else</span> <span class="p">{</span><span class="k">return</span> <span class="p">[]}</span>
+</span><span class='line'>        <span class="k">return</span> <span class="n">encodedArray</span><span class="p">.</span><span class="n">map</span><span class="p">{</span><span class="err">$</span><span class="mi">0</span> <span class="n">as</span><span class="o">?</span> <span class="bp">NSDictionary</span><span class="p">}.</span><span class="n">flatMap</span><span class="p">{</span><span class="n">T</span><span class="p">(</span><span class="nl">propertyListRepresentation</span><span class="p">:</span><span class="err">$</span><span class="mi">0</span><span class="p">)}</span>
+</span><span class='line'>    <span class="p">}</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>2- Saving Structs in NSUerDefaults:</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+</pre></td><td class='code'><pre><code class='Objective-C'><span class='line'>     <span class="cm">/**</span>
+</span><span class='line'><span class="cm">     Accept an Array of objects and convert it to Array of dictionaries by converting each object to dictionary to be persisted in NSUserDefaults.</span>
+</span><span class='line'><span class="cm">     We’re creating an array of encoded values by taking the array parameter and mapping each one using the propertyListRepresentation function to turn it into an array of NSDictionaries.</span>
+</span><span class='line'><span class="cm">     We then run the result through the setObject:forKey function associated with the NSUserDefaults.</span>
+</span><span class='line'>
+</span><span class='line'><span class="cm">     - parameter [T]: the array of objects that conform PropertyListReadable protocol to  to be saved in NSUserDefaults.</span>
+</span><span class='line'><span class="cm">     - parameter key: The key with which to check if it has a value in NSUserDefaults.</span>
+</span><span class='line'><span class="cm">     */</span>
+</span><span class='line'>    <span class="n">func</span> <span class="n">saveValuesToDefaults</span><span class="o">&lt;</span><span class="nl">T</span><span class="p">:</span><span class="n">PropertyListReadable</span><span class="o">&gt;</span><span class="p">(</span><span class="nl">newValues</span><span class="p">:[</span><span class="n">T</span><span class="p">],</span> <span class="nl">key</span><span class="p">:</span><span class="n">String</span><span class="p">)</span> <span class="p">{</span>
+</span><span class='line'>        <span class="n">let</span> <span class="n">encodedValues</span> <span class="o">=</span> <span class="n">newValues</span><span class="p">.</span><span class="n">map</span><span class="p">{</span><span class="err">$</span><span class="mf">0.</span><span class="n">propertyListRepresentation</span><span class="p">()}</span>
+</span><span class='line'>        <span class="bp">NSUserDefaults</span><span class="p">.</span><span class="n">standardUserDefaults</span><span class="p">().</span><span class="n">setObject</span><span class="p">(</span><span class="n">encodedValues</span><span class="p">,</span> <span class="nl">forKey</span><span class="p">:</span><span class="n">key</span><span class="p">)</span>
+</span><span class='line'>    <span class="p">}</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>P.S. I’ve created a <a href="https://github.com/iSame7/StructPersistorSwiftPlayground">Playground</a> that contains a working example.</p>
+
+<p>Happy Coding :)</p>
+</div>
+
+
+	
+	</article>
+
+	
+	<div class="share">
+	  <!-- <ul> -->
+	  <!--   <li>
+  <a href="https://twitter.com/intent/tweet?text=Persisting Structs in Swift by @&url=http://isame7.github.io/blog/2016/03/16/persisting-structs-in-swift/" title="Share Persisting Structs in Swift on Twitter">
+    <img src="/images/social/twitter.png" />
+  </a>
+</li>
+ -->
+	  <!--   <li>
+  <a href="https://www.facebook.com/sharer.php?u=http://isame7.github.io/blog/2016/03/16/persisting-structs-in-swift/" title="Share Persisting Structs in Swift on Facebook">
+    <img src="/images/social/facebook.png" />
+  </a>
+</li>
+ -->
+	  <!--   <li>
+  <a href="https://plus.google.com/share?url=http://isame7.github.io/blog/2016/03/16/persisting-structs-in-swift/" title="Share Persisting Structs in Swift on Google Plus">
+    <img src="/images/social/google.png" />
+  </a>
+</li>
+ -->
+	  <!-- </ul> -->
+	</div>
+
+
+
+</div>
+	<footer id="footer" class="inner"><br>
+<br>
+<br>
+<br>
+&copy; 2016
+
+    Sameh Mabrouk
+
+</footer>
+	<script src="/javascripts/slash.js"></script>
+<script src="/javascripts/hyphenator.js"></script>
+
+
+
+
+
+
+
+</body>
+<script>
+  $(document).ready(function() {
+  // Make images center
+  $('p:has(img)').css('text-align', 'center');
+  });
+</script>
+</html>
