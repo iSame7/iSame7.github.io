@@ -1,524 +1,26 @@
 <?xml version="1.0" encoding="utf-8"?>
 <feed xmlns="http://www.w3.org/2005/Atom">
 
-  <title><![CDATA[Sameh Mabrouk]]></title>
-  <link href="http://http://isame7.github.io/atom.xml" rel="self"/>
-  <link href="http://http://isame7.github.io/"/>
-  <updated>2016-04-09T17:04:50+02:00</updated>
-  <id>http://http://isame7.github.io/</id>
+  <title><![CDATA[Smapps]]></title>
+  <link href="http://isame7.github.io/atom.xml" rel="self"/>
+  <link href="http://isame7.github.io/"/>
+
+  <updated>2015-07-14T23:28:38+02:00</updated>
+  <id>http://isame7.github.io/</id>
   <author>
-    <name><![CDATA[Sameh Mabrouk]]></name>
+    <name><![CDATA[Your Name]]></name>
     
   </author>
+  <generator uri="http://octopress.org/">Octopress</generator>
 
   
   <entry>
-    
-    <title type="html"><![CDATA[Reasons Swift should be your iOS language]]></title>
-    <link href="http://isame7.github.io/blog/2016/04/09/reasons-swift-should-be-your-ios-language/"/>
-    
-    <updated>2016-04-09T16:17:05+02:00</updated>
-    <id>http://http://isame7.github.io/blog/2016/04/09/reasons-swift-should-be-your-ios-language</id>
-    
-      <content type="html"><![CDATA[<h1>Intro:</h1>
-
-<p>Introduced with iOS 8 in June 2014 at WWDC, Apple’s developer conference, Swift is Apple’s brand new language for creating apps. Now in its second iteration, and made Open Source in December 2015, Swift is not just designed to be a simpler language, helping apps run faster and be more secure, but could also be one of the primary coding languages across other platforms in the future.</p>
-
-<p>As a language, Swift enables developers to build their apps alongside interactive Playgrounds, helping them to see the results of the lines of code they write side-by-side. With computer programming skills being seen as more important than ever, part of the appeal of Swift is that it’s a comparatively easy language to learn and code in. This was by design.</p>
-
-<p>As a language, work on Swift began in the summer of 2010 by an Apple programmer called Chris Lattner. Chris spent a year and a half working on the language, with the eventual collaboration of many other programmers at Apple.</p>
-
-<p>This post outline the reasons why yiu should choose swift as iOS language.</p>
-
-<h1>1. It&rsquo;s faster</h1>
-
-<p>Where Swift currently falls behind Objective-C is its compiler. If we look at writing a simple JSON parser in Swift and the equivalent parser in Obj-C, the following would likely be true:</p>
-
-<h3>• The Swift parser would contain fewer lines of code than the Obj- C parser</h3>
-
-<h3>• The Obj-C parse would compile considerably quicker than the Swift parser</h3>
-
-<h3>• Once compiled, the Swift parser would execute quicker than the Obj-C parser</h3>
-
-<p>Currently, the Swift compiler within Xcode takes longer. This isn’t linked to the number of lines of code, but the use of functional programming paradigms, which are gaining popularity in Swift. Once compiled however, Swift apps will execute faster than Objective-C, thanks to the compiler optimisations that can be made with Swift.</p>
-
-<p>Swift also uses roughly half the amount of files to work with, compared to Objective-C. With Objective-C, you need a header file (.h) and an implementation file (.m), with Swift however, you just need a single .swift file. This makes it less confusing for developers that aren’t accustomed to working with header and implementation files.</p>
-
-<h1>2. It&rsquo;s safer</h1>
-
-<p>As Apple says on its <a href="https://developer.apple.com/swift/">developer site1</a> :
-‘Swift eliminates entire classes of unsafe code. Variables are always initialized before use, arrays and integers are checked for overflow, and memory is managed automatically. Syntax is tuned to make it easy to define your intent — for example, simple three- character keywords define a variable ( var ) or constant ( let ).’
-This, in addition to removing null pointers, one of the common programming errors and routes of bugs, means apps are less likely to crash, helping to improve the user experience.
-“Swift uses variables to store and refer to values by an identifying
-name. Swift also makes extensive use of variables whose values
-cannot be changed. These are known as constants, and are much
-more powerful than constants in C. Constants are used
-throughout Swift to make code safer and clearer in intent when
-￼you work with values that do not need to change.” Excerpt From: 2
-Apple Inc. <a href="https://itunes.apple.com/gb/book/swift-programming-language/id881256329?mt=11">“The Swift Programming Language (Swift 2.1).” iBooks</a>.</p>
-
-<h1>3. It&rsquo;s easier to learn</h1>
-
-<p>In a discussion with <a href="http://daringfireball.net/thetalkshow/139/federighi-gruber-transcript">Daring Fireball</a>  host and Apple commentator, John Gruber and Craig Federighi, Apple’s senior vice president of software engineering, Craig said:
-‘Swift is, we think, the primary programming language that developers should be taught programming in, actually. I mean, if you’re going to learn computer science, Swift is a fantastic learning language.’</p>
-
-<p>Apple has been open with the fact that Swift was designed to be easier for people to learn, opening up coding to a wider group of skill sets.
-For someone with programming experience, even the complex coding within Swift is relatively easy to learn. For most people though, learning Swift is just a matter of learning its features and syntax, then practicing them. Thankfully, the official Swift documentation is easy to follow, making it easy to understand the language and how to test drive the code.</p>
-
-<h1>4. Playgrounds let you see the impact of your code in real-time</h1>
-
-<p>When developing apps using Apple’s Xcode and Swift, there’s the option of using Playgrounds, a secondary window that enables developers to test the code they’ve written and display results in real time.
-This is helpful for newbies learning the language and seasoned developers testing an advanced algorithm for their current project.</p>
-
-<h1>5.  It is better at memory management</h1>
-
-<p>Building great apps is much harder than people may think. Creating an app is one thing, but creating one that doesn’t eat battery or use up memory, requires more expertise. Memory management issues can be harder to pin point as there won’t always be obvious bugs. Instead, memory management issues tend to manifest themselves through obscure bugs like repeat notifications or random crashes.
-First introduced in 2010 with Xcode 4.2, with iOS 4.0, Automatic Reference Counting (ARC) is able to track and manage an app’s memory usage. ARC has been a core part of memory management for iOS and OS X projects, since iOS 5.0. It is one of the features that has been carried over from Objective-C to Swift. In most cases, this means that memory management “just works” in Swift.
-There is still some work to be done here, however. Currently, the Clang static analyser, which flags up potential memory leaks, dead stores, unused variables, etc. isn’t compatible with Swift. As a tool which is built into Xcode, Clang is a useful tool for spotting potential memory issues at compile time. Whilst “just works” with Swift is often true, there are times when additional optimisations are required, which is precisely where Clang would help.</p>
-
-<h1>6. Now that Swift is Open Source</h1>
-
-<p>Being Open Source opens up Swift to the potential that it can be used across a number of different platforms and for backend infrastructure. Open Sourcing Swift means that Apple will be able to get feedback from the community to make improvements on a regular, ongoing basis.
-By going Open Source independent developers, development teams and academics, across the world, can all contribute to the success of the language. Various frameworks, libraries and web servers/web components can be developed by this community, all at no cost to Apple. These projects can then be used by other developers to create an unlimited number of products, making Swift more important outside of the Apple developer community.</p>
-
-<h1>7. It’s the top language on GitHub</h1>
-
-<p>A week after officially going Open Source in December 2015, Swift jumped to the top of the most popular languages on GitHub. GitHub is the go-to source for open source language development, so the fact that Swift quickly jumped to the top, and has stayed there since, is a good indication of its popularity.
-As Swift matures over the next few years, we can expect to see it being used by an ever increasing array of platforms. Whilst this is positive, it doesn’t mean that large companies will change their current language to Swift. Swift is the newest kid on the block, so it will take time to get adoption by larger companies outside of the development of new iOS apps.</p>
-
-<h1>8. It’s interoperable with Objective-C</h1>
-
-<p>Objective-C and C were the languages that native iOS apps were largely written in, prior to the introduction of Swift. Swift is interoperable with both, meaning developers can build on their existing apps, using Swift. This means that developers don’t have to do a full re-write. One of the most important aspects of interoperability is that it enables developers to work with Objective-C APIs when writing Swift code. This means that APIs don’t need to be rewritten to work with Swift and that apps will continue working.
-As it is interoperable, developers are able to slowly replace older code in apps, with Swift code, without breaking the app (though this is possible, if the coding isn’t done properly). Migration provides an opportunity to revisit an existing Objective-C app and improve its architecture, logic and performance by replacing pieces of it in Swift.</p>
-
-<h1>9. Swift will be server side language</h1>
-
-<p>Though Swift is currently just for iOS and OS X, there is a huge appetite within the developer community to use it for servers and backend development.
-According to Federighi4, “IBM, for instance, jumped all over Swift for building their mobile apps, and almost immediately they were coming back to us with, “We really want to use this on the server. How can we get this on the server?”
-Of course, it’s not just IBM, as Federighi explained to John Gruber, Apple’s iCloud team is already keen to use it for iCloud, “And our own iCloud team has been completely champing at the bit to be able to apply it in many, many of the things they do. So, I think it’s going to be one of the first break-out uses of Swift. And of course these days there are so many mobile applications that are part mobile app, part server code. And in a lot of cases, at the very least you want to share your knowledge, but very often you want to share parts of code, parts of your model layer, some of your utility libraries, and having Swift enabling you to do that is going to be huge for a lot of our community.”</p>
-
-<p>Whether Swift’s use on the server takes off or not depends on what the development community does with the language. Already, developers are busy making cool projects, such as:</p>
-
-<h3>• <a href="https://github.com/glock45/swifter">Swifter</a>: a small HTTP server engine, written in Swift</h3>
-
-<h3>• <a href="https://github.com/ianthetechie/SwiftCGI">SwiftCGI</a>: a modular Microframework that encourages a functional approach to developing web apps in Swift.</h3>
-
-<h3>• <a href="http://perfect.org/">Perfect</a> : an enterprise-grade web server and web toolkit for the Swift programming language.</h3>
-
-<p>We can also expect to see other current Objective-C projects being converted to Swift, such as CocoaHTTPServer and HTTPKit in the near future.</p>
-
-<p>￼</p>
-]]></content>
-      
-  </entry>
-  
-  <entry>
-    
-    <title type="html"><![CDATA[Persisting Structs in Swift]]></title>
-    <link href="http://isame7.github.io/blog/2016/03/16/persisting-structs-in-swift/"/>
-    
-    <updated>2016-03-16T01:50:06+02:00</updated>
-    <id>http://http://isame7.github.io/blog/2016/03/16/persisting-structs-in-swift</id>
-    
-      <content type="html"><![CDATA[<p>Today i have been assigned another JIRA issue by my product manager. This task is simply to mock the app data or to maintain a backup of the app data like json retrieved from API.
-I just started to dig into the project code because i was newbie to this project and i found that our data models is written like Structs not Classes. The story started from here because that&rsquo;s made me to write this post.</p>
-
-<p>I&rsquo;m working now on Apple TV App (YAY), i&rsquo;ve never imagined that i&rsquo;ll develop in tv OS, However things happens. the project i&rsquo;m working on is a entertainment application like most Apple TV apps it display Video content so the home screen contain some recommendations video assets from our backend and it&rsquo;s displayed as Tiles in home screen, once the user clicks on any tiles he will be redirected to asset details screen that contain details about the video clicked[he can play video, browse cast&amp;crew, Add to Wishlist, etc]</p>
-
-<p>One of the functionality that our client requested is to be able to make the app working even the backend/server is down. So we have to persist these video assets data(recommendations,&hellip;) somewhere even if the user close that app and open it again.</p>
-
-<p>First of all i thought for multiple solutions for persisting these data:</p>
-
-<p>1- It make sense to use NSUserDefaults to save recommendations. As NSUserdefaults is a plists which is a NSDictionaries that can includes array, strings, numbers, and even NSDictionaries.
-2- I just thought to use a local json file that contain a backup json data the same data comming from backend.</p>
-
-<p>Finally i decided to use both solutions for persisting these data, So the application flow was as follows:</p>
-
-<p>This was the sudo code:</p>
-
-<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-<span class='line-number'>4</span>
-<span class='line-number'>5</span>
-<span class='line-number'>6</span>
-<span class='line-number'>7</span>
-<span class='line-number'>8</span>
-<span class='line-number'>9</span>
-<span class='line-number'>10</span>
-<span class='line-number'>11</span>
-<span class='line-number'>12</span>
-<span class='line-number'>13</span>
-<span class='line-number'>14</span>
-<span class='line-number'>15</span>
-<span class='line-number'>16</span>
-</pre></td><td class='code'><pre><code class='Objective-C'><span class='line'><span class="n">call</span> <span class="n">the</span> <span class="n">API</span> <span class="n">server</span> <span class="n">to</span> <span class="n">get</span> <span class="n">the</span> <span class="n">video</span> <span class="n">assets</span> <span class="nl">data</span> <span class="p">:</span>
-</span><span class='line'><span class="k">if</span> <span class="n">there</span> <span class="n">is</span> <span class="n">a</span> <span class="n">response</span><span class="p">{</span>
-</span><span class='line'>
-</span><span class='line'><span class="c1">// API server is responding.</span>
-</span><span class='line'><span class="o">-</span> <span class="n">open</span> <span class="n">the</span> <span class="n">app</span> <span class="n">normally</span><span class="p">.</span>
-</span><span class='line'><span class="o">-</span> <span class="n">save</span> <span class="n">the</span> <span class="n">data</span> <span class="n">locally</span> <span class="k">in</span> <span class="n">NSUserdefaults</span><span class="p">.</span>
-</span><span class='line'><span class="p">}</span>
-</span><span class='line'><span class="k">else</span> <span class="p">{</span>
-</span><span class='line'><span class="c1">// no response from the API server.</span>
-</span><span class='line'><span class="o">-</span> <span class="n">check</span> <span class="k">if</span> <span class="n">there</span> <span class="n">is</span> <span class="n">a</span> <span class="n">data</span> <span class="n">stored</span> <span class="n">locally</span> <span class="k">in</span> <span class="n">NSUserdefault</span> <span class="p">{</span>
-</span><span class='line'>    <span class="n">load</span> <span class="n">data</span> <span class="n">from</span> <span class="n">NSUserdefault</span><span class="p">.</span>
-</span><span class='line'><span class="p">}</span>
-</span><span class='line'><span class="k">else</span> <span class="p">{</span>
-</span><span class='line'>    <span class="n">load</span> <span class="n">data</span> <span class="n">from</span> <span class="n">the</span> <span class="n">local</span> <span class="n">json</span> <span class="n">file</span><span class="p">.</span>
-</span><span class='line'><span class="p">}</span>
-</span><span class='line'><span class="p">}</span>
-</span></code></pre></td></tr></table></div></figure>
-
-
-<p>The beauty of this way is that in any case we have a mock data so our app can work any time our server is down. even if this is the first time the user open the app and the server down, don&rsquo;t worry the app will load the data from the local json file. Also we will have a updated mocked data because every time server is responding we save the new data in NSUserdefault so it&rsquo;s updated data.</p>
-
-<p>This too much information and out of scope now, sorry just thought i&rsquo;ve to share it with you!</p>
-
-<h2>Let&rsquo;s get back to the point, So we have to store an array of recommendations objects in NSUserDefaults so we can retrieve them any time.</h2>
-
-<p>The way we all know to make this happens was as follows:</p>
-
-<p>We use NSKeyArchiver the archiving functionality to achieve that.And by the way our data persistence were not large to use Core Data or SQLite.</p>
-
-<p>Archiving functionality has few parts. we have to conform to <strong>NSCoding</strong> protocol that requires to implement 2 methods <em>encodeWithCoder</em> and * initWithCoder* which is where we specify how to encode and decode data.</p>
-
-<p>Then we implement NSCoder protocol methods in our Recommendation class as follows:</p>
-
-<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-<span class='line-number'>4</span>
-<span class='line-number'>5</span>
-<span class='line-number'>6</span>
-<span class='line-number'>7</span>
-<span class='line-number'>8</span>
-<span class='line-number'>9</span>
-<span class='line-number'>10</span>
-<span class='line-number'>11</span>
-<span class='line-number'>12</span>
-<span class='line-number'>13</span>
-<span class='line-number'>14</span>
-<span class='line-number'>15</span>
-<span class='line-number'>16</span>
-<span class='line-number'>17</span>
-<span class='line-number'>18</span>
-<span class='line-number'>19</span>
-<span class='line-number'>20</span>
-</pre></td><td class='code'><pre><code class='Objective-C'><span class='line'><span class="cp">#pragma mark NSCoding methods</span>
-</span><span class='line'>
-</span><span class='line'><span class="p">-</span> <span class="p">(</span><span class="kt">void</span><span class="p">)</span><span class="nf">encodeWithCoder:</span><span class="p">(</span><span class="bp">NSCoder</span> <span class="o">*</span><span class="p">)</span><span class="nv">coder</span><span class="p">;</span>
-</span><span class='line'><span class="p">{</span>
-</span><span class='line'>    <span class="k">if</span> <span class="p">(</span><span class="n">name</span> <span class="o">!=</span> <span class="nb">nil</span><span class="p">)</span> <span class="p">{</span>
-</span><span class='line'>        <span class="p">[</span><span class="n">coder</span> <span class="nl">encodeObject</span><span class="p">:</span><span class="n">entityId</span> <span class="nl">forKey</span><span class="p">:</span><span class="s">@&quot;entityId&quot;</span><span class="p">];</span>
-</span><span class='line'>        <span class="p">[</span><span class="n">coder</span> <span class="nl">encodeObject</span><span class="p">:</span><span class="n">entityType</span> <span class="nl">forKey</span><span class="p">:</span><span class="s">@&quot;entityType&quot;</span><span class="p">];</span>
-</span><span class='line'>        <span class="p">[</span><span class="n">coder</span> <span class="nl">encodeObject</span><span class="p">:</span><span class="n">entity</span> <span class="nl">forKey</span><span class="p">:</span><span class="s">@&quot;entity&quot;</span><span class="p">];</span>
-</span><span class='line'>    <span class="p">}</span>
-</span><span class='line'><span class="p">}</span>
-</span><span class='line'>
-</span><span class='line'><span class="o">-</span> <span class="p">(</span><span class="kt">instancetype</span><span class="p">)</span><span class="nl">initWithCoder</span><span class="p">:(</span><span class="bp">NSCoder</span> <span class="o">*</span><span class="p">)</span><span class="n">coder</span>
-</span><span class='line'><span class="p">{</span>
-</span><span class='line'>    <span class="k">if</span><span class="p">(</span><span class="nb">self</span> <span class="o">=</span> <span class="p">[</span><span class="nb">super</span> <span class="n">init</span><span class="p">])</span> <span class="p">{</span>
-</span><span class='line'>        <span class="nb">self</span><span class="p">.</span><span class="n">entityId</span> <span class="o">=</span> <span class="p">[</span><span class="n">coder</span> <span class="nl">decodeObjectForKey</span><span class="p">:</span><span class="s">@&quot;entityId&quot;</span><span class="p">];</span>
-</span><span class='line'>        <span class="nb">self</span><span class="p">.</span><span class="n">entityType</span> <span class="o">=</span> <span class="p">[</span><span class="n">coder</span> <span class="nl">decodeObjectForKey</span><span class="p">:</span><span class="s">@&quot;entityType&quot;</span><span class="p">];</span>
-</span><span class='line'>        <span class="nb">self</span><span class="p">.</span><span class="n">entity</span> <span class="o">=</span> <span class="p">[</span><span class="n">coder</span> <span class="nl">decodeObjectForKey</span><span class="p">:</span><span class="s">@&quot;entity&quot;</span><span class="p">];</span>
-</span><span class='line'>    <span class="p">}</span>
-</span><span class='line'>    <span class="k">return</span> <span class="nb">self</span><span class="p">;</span>
-</span><span class='line'><span class="p">}</span>
-</span></code></pre></td></tr></table></div></figure>
-
-
-<p>This way serialize our Recommendation object and is convert into NSData, making it easy to be persisted.</p>
-
-<p>To store the encoded object as NSData we use NSKeyedArchiver archivedDataWithRootObject method as follows:</p>
-
-<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-</pre></td><td class='code'><pre><code class='Objective-C'><span class='line'><span class="bp">NSData</span> <span class="o">*</span><span class="n">encodedWeatherData</span> <span class="o">=</span> <span class="p">[</span><span class="bp">NSKeyedArchiver</span> <span class="nl">archivedDataWithRootObject</span><span class="p">:</span><span class="n">recommendations</span><span class="p">];</span>
-</span><span class='line'><span class="p">[[</span><span class="bp">NSUserDefaults</span> <span class="n">standardUserDefaults</span><span class="p">]</span><span class="nl">setObject</span><span class="p">:</span><span class="n">encodedWeatherData</span> <span class="nl">forKey</span><span class="p">:@</span><span class="err">“</span><span class="n">recommnedations_data</span><span class="s">&quot;];</span>
-</span></code></pre></td></tr></table></div></figure>
-
-
-<p>To decode the our recommendation model we have to search in NSUserdefaults for encoded object with the key “recommnedations_data” then decode and return it.</p>
-
-<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-<span class='line-number'>4</span>
-<span class='line-number'>5</span>
-<span class='line-number'>6</span>
-<span class='line-number'>7</span>
-<span class='line-number'>8</span>
-</pre></td><td class='code'><pre><code class='Objective-C'><span class='line'><span class="p">+</span> <span class="p">(</span><span class="bp">NSArray</span> <span class="o">*</span><span class="p">)</span><span class="nf">recommendations</span>
-</span><span class='line'><span class="p">{</span>
-</span><span class='line'>    <span class="bp">NSData</span> <span class="o">*</span><span class="n">encodedRecommendations</span> <span class="o">=</span> <span class="p">[[</span><span class="bp">NSUserDefaults</span> <span class="n">standardUserDefaults</span><span class="p">]</span><span class="nl">objectForKey</span><span class="p">:</span><span class="s">@&quot;recommnedations_data&quot;</span><span class="p">];</span>
-</span><span class='line'>    <span class="k">if</span><span class="p">(</span><span class="n">encodedRecommendations</span><span class="p">)</span> <span class="p">{</span>
-</span><span class='line'>        <span class="k">return</span> <span class="p">(</span><span class="bp">NSArray</span> <span class="o">*</span><span class="p">)[</span><span class="bp">NSKeyedUnarchiver</span> <span class="nl">unarchiveObjectWithData</span><span class="p">:</span><span class="n">encodedRecommendations</span><span class="p">];</span>
-</span><span class='line'>    <span class="p">}</span>
-</span><span class='line'>    <span class="k">return</span> <span class="nb">nil</span><span class="p">;</span>
-</span><span class='line'><span class="p">}</span>
-</span></code></pre></td></tr></table></div></figure>
-
-
-<h1>Issues with this technique:</h1>
-
-<h2>NSCoding only works with objects inheriting from NSObject.</h2>
-
-<p>Currently in our Apple TV application we use Structs for the model layer so every model is basically a Struct. Actually our cannot conform to NSCoding protocol because it’s not inheriting from NSObject.</p>
-
-<p>As we have a lot of models in our app and we are taking advantages of the features of Structs, It doesn’t make sense to convert/rewrite our models (Recommendation) to objects rather than structs.</p>
-
-<h1>Swift Approach</h1>
-
-<p>How we solved the problem of persisting Structs in Swift? Since we can’t archive and unarchive them like classes inherits from NSObjects.</p>
-
-<p>Let’s spill out the the solution we can do:</p>
-
-<h1>Structs:</h1>
-
-<p>Recommendation model this is one of the models that we want to persist. this model is already implemented in the project as a Struct:</p>
-
-<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-<span class='line-number'>4</span>
-<span class='line-number'>5</span>
-<span class='line-number'>6</span>
-<span class='line-number'>7</span>
-<span class='line-number'>8</span>
-<span class='line-number'>9</span>
-<span class='line-number'>10</span>
-<span class='line-number'>11</span>
-<span class='line-number'>12</span>
-<span class='line-number'>13</span>
-</pre></td><td class='code'><pre><code class='Objective-C'><span class='line'><span class="k">struct</span> <span class="n">Recommendation</span><span class="p">{</span>
-</span><span class='line'>
-</span><span class='line'>    <span class="n">var</span> <span class="nl">entityId</span><span class="p">:</span> <span class="bp">NSNumber</span><span class="o">?</span>
-</span><span class='line'>    <span class="n">var</span> <span class="nl">entityType</span><span class="p">:</span> <span class="n">EntityTypeEnum</span><span class="o">?</span>
-</span><span class='line'>    <span class="n">var</span> <span class="nl">entity</span><span class="p">:</span> <span class="n">EntityProtocol</span><span class="o">?</span>
-</span><span class='line'>
-</span><span class='line'>    <span class="n">init</span><span class="p">(</span><span class="nl">entityId</span><span class="p">:</span><span class="bp">NSNumber</span><span class="p">,</span> <span class="nl">entityType</span><span class="p">:</span> <span class="n">EntityTypeEnum</span><span class="p">,</span> <span class="nl">entity</span><span class="p">:</span> <span class="n">EntityProtocol</span><span class="o">?</span><span class="p">){</span>
-</span><span class='line'>
-</span><span class='line'>        <span class="nb">self</span><span class="p">.</span><span class="n">entityId</span>   <span class="o">=</span> <span class="n">entityId</span>
-</span><span class='line'>        <span class="nb">self</span><span class="p">.</span><span class="n">entityType</span> <span class="o">=</span> <span class="n">entityType</span>
-</span><span class='line'>        <span class="nb">self</span><span class="p">.</span><span class="n">entity</span>     <span class="o">=</span> <span class="n">entity</span>
-</span><span class='line'>    <span class="p">}</span>
-</span><span class='line'><span class="p">}</span>
-</span></code></pre></td></tr></table></div></figure>
-
-
-<p>Now we need a way to persist our recommendation model, we have to convert our Struct to another object that can be persisted like NSDictionary.</p>
-
-<p>The idea is we can convert our Struct into NSDictionary object and then we can persist this NSDictionary into NSUserdefaults easily. and then we can extract this NSDictioanry from NSUserDefaults and brings it back into Recommendation instance.</p>
-
-<p>we did that using a Protocol we used a protocol to make it more generic for all models of the project. this protocol contain two methods, one method return an NSDictionary from Recommendation instance by going through the Recommendation instance and set key-value pairs for each of the variables and returns an NSDictionary.</p>
-
-<p>another method that takes NSDictioanry as parameter and return an instance of Recommendation model.</p>
-
-<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-<span class='line-number'>4</span>
-</pre></td><td class='code'><pre><code class='Objective-C'><span class='line'><span class="n">protocol</span> <span class="n">PropertyListReadable</span> <span class="p">{</span>
-</span><span class='line'>    <span class="n">func</span> <span class="n">propertyListRepresentation</span><span class="p">()</span> <span class="o">-&gt;</span> <span class="bp">NSDictionary</span>
-</span><span class='line'>    <span class="n">init</span><span class="o">?</span><span class="p">(</span><span class="nl">propertyListRepresentation</span><span class="p">:</span><span class="bp">NSDictionary</span><span class="o">?</span><span class="p">)</span>
-</span><span class='line'><span class="p">}</span>
-</span></code></pre></td></tr></table></div></figure>
-
-
-<p>Now we can extend each Struct with protocol</p>
-
-<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-<span class='line-number'>4</span>
-<span class='line-number'>5</span>
-<span class='line-number'>6</span>
-<span class='line-number'>7</span>
-<span class='line-number'>8</span>
-<span class='line-number'>9</span>
-<span class='line-number'>10</span>
-<span class='line-number'>11</span>
-<span class='line-number'>12</span>
-<span class='line-number'>13</span>
-<span class='line-number'>14</span>
-<span class='line-number'>15</span>
-<span class='line-number'>16</span>
-<span class='line-number'>17</span>
-<span class='line-number'>18</span>
-<span class='line-number'>19</span>
-<span class='line-number'>20</span>
-<span class='line-number'>21</span>
-<span class='line-number'>22</span>
-<span class='line-number'>23</span>
-<span class='line-number'>24</span>
-</pre></td><td class='code'><pre><code class='Objective-C'><span class='line'><span class="n">extension</span> <span class="nl">REMintRecommendationModel</span><span class="p">:</span> <span class="n">PropertyListReadable</span><span class="p">{</span>
-</span><span class='line'>
-</span><span class='line'>    <span class="n">func</span> <span class="n">propertyListRepresentation</span><span class="p">()</span> <span class="o">-&gt;</span> <span class="bp">NSDictionary</span> <span class="p">{</span>
-</span><span class='line'>
-</span><span class='line'>        <span class="n">var</span> <span class="n">representation</span> <span class="o">=</span> <span class="p">[</span><span class="nl">String</span> <span class="p">:</span> <span class="n">AnyObject</span><span class="p">]()</span>
-</span><span class='line'>        <span class="k">if</span> <span class="n">let</span> <span class="n">entityId</span> <span class="o">=</span> <span class="nb">self</span><span class="p">.</span><span class="n">entityId</span><span class="p">{</span>
-</span><span class='line'>            <span class="n">representation</span><span class="p">[</span><span class="s">&quot;entityId&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">entityId</span>
-</span><span class='line'>        <span class="p">}</span>
-</span><span class='line'>        <span class="k">if</span> <span class="n">let</span> <span class="n">type</span> <span class="o">=</span> <span class="nb">self</span><span class="p">.</span><span class="n">entityType</span><span class="p">{</span>
-</span><span class='line'>            <span class="n">representation</span><span class="p">[</span><span class="s">&quot;type&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">type</span><span class="p">.</span><span class="n">rawValue</span>
-</span><span class='line'>        <span class="p">}</span>
-</span><span class='line'>        <span class="k">if</span> <span class="n">let</span> <span class="n">entity</span> <span class="o">=</span> <span class="nb">self</span><span class="p">.</span><span class="n">entity</span><span class="p">{</span>
-</span><span class='line'>            <span class="n">representation</span><span class="p">[</span><span class="s">&quot;entity&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">entity</span><span class="p">.</span><span class="n">propertyListRepresentation</span><span class="p">()</span>
-</span><span class='line'>        <span class="p">}</span>
-</span><span class='line'>        <span class="k">return</span> <span class="n">representation</span>
-</span><span class='line'>    <span class="p">}</span>
-</span><span class='line'>
-</span><span class='line'>    <span class="n">init</span><span class="o">?</span><span class="p">(</span><span class="nl">propertyListRepresentation</span><span class="p">:</span><span class="bp">NSDictionary</span><span class="o">?</span><span class="p">)</span> <span class="p">{</span>
-</span><span class='line'>
-</span><span class='line'>        <span class="n">guard</span> <span class="n">let</span> <span class="n">values</span> <span class="o">=</span> <span class="n">propertyListRepresentation</span>
-</span><span class='line'>            <span class="k">else</span> <span class="p">{</span><span class="k">return</span> <span class="nb">nil</span><span class="p">}</span>
-</span><span class='line'>        <span class="nb">self</span> <span class="o">=</span>  <span class="n">Recommendation</span><span class="p">(</span><span class="nl">data</span><span class="p">:</span> <span class="n">values</span><span class="p">)</span>
-</span><span class='line'>    <span class="p">}</span>
-</span><span class='line'><span class="p">}</span>
-</span></code></pre></td></tr></table></div></figure>
-
-
-<h2>Note: You may face a problem in your implementation is that you have another struct instance inside you Struct, No worries you have to follow the same approach all your persisted Structs must conform to PropertyListReadable protocol and then you can  propertyListRepresentation to get an NSDictionary for this Struct or return this Struct back from NSDictionary.</h2>
-
-<h1>Dealing with NSUerDefaults:</h1>
-
-<p>1- Extracting Structs from NSUerDefaults:</p>
-
-<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-<span class='line-number'>4</span>
-<span class='line-number'>5</span>
-<span class='line-number'>6</span>
-<span class='line-number'>7</span>
-<span class='line-number'>8</span>
-<span class='line-number'>9</span>
-<span class='line-number'>10</span>
-<span class='line-number'>11</span>
-<span class='line-number'>12</span>
-<span class='line-number'>13</span>
-<span class='line-number'>14</span>
-</pre></td><td class='code'><pre><code class='Objective-C'><span class='line'>    <span class="cm">/**</span>
-</span><span class='line'><span class="cm">     Accept an Array of dictionaries and convert it back to Array of objects by converting each dictionary to object to be persisted in NSUserDefaults.</span>
-</span><span class='line'><span class="cm">     it accept an optional argument of an array of any object and returning an array of our generic return value. it also are specify our generic return value must conform to the PropertyListReadable protocol.</span>
-</span><span class='line'>
-</span><span class='line'><span class="cm">     - parameter [AnyObject]: the array of dictionaries to be converted.</span>
-</span><span class='line'><span class="cm">     - parameter key: The key with which to check if it has a value in NSUserDefaults.</span>
-</span><span class='line'><span class="cm">     - returns [T]: array of objects conforming to PropertyListReadable protocol.</span>
-</span><span class='line'>
-</span><span class='line'><span class="cm">     */</span>
-</span><span class='line'>    <span class="n">func</span> <span class="n">extractValuesFromPropertyListArray</span><span class="o">&lt;</span><span class="nl">T</span><span class="p">:</span><span class="n">PropertyListReadable</span><span class="o">&gt;</span><span class="p">(</span><span class="nl">propertyListArray</span><span class="p">:[</span><span class="n">AnyObject</span><span class="p">]</span><span class="o">?</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="p">[</span><span class="n">T</span><span class="p">]</span> <span class="p">{</span>
-</span><span class='line'>        <span class="n">guard</span> <span class="n">let</span> <span class="n">encodedArray</span> <span class="o">=</span> <span class="n">propertyListArray</span>
-</span><span class='line'>            <span class="k">else</span> <span class="p">{</span><span class="k">return</span> <span class="p">[]}</span>
-</span><span class='line'>        <span class="k">return</span> <span class="n">encodedArray</span><span class="p">.</span><span class="n">map</span><span class="p">{</span><span class="err">$</span><span class="mi">0</span> <span class="n">as</span><span class="o">?</span> <span class="bp">NSDictionary</span><span class="p">}.</span><span class="n">flatMap</span><span class="p">{</span><span class="n">T</span><span class="p">(</span><span class="nl">propertyListRepresentation</span><span class="p">:</span><span class="err">$</span><span class="mi">0</span><span class="p">)}</span>
-</span><span class='line'>    <span class="p">}</span>
-</span></code></pre></td></tr></table></div></figure>
-
-
-<p>2- Saving Structs in NSUerDefaults:</p>
-
-<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-<span class='line-number'>4</span>
-<span class='line-number'>5</span>
-<span class='line-number'>6</span>
-<span class='line-number'>7</span>
-<span class='line-number'>8</span>
-<span class='line-number'>9</span>
-<span class='line-number'>10</span>
-<span class='line-number'>11</span>
-<span class='line-number'>12</span>
-</pre></td><td class='code'><pre><code class='Objective-C'><span class='line'>     <span class="cm">/**</span>
-</span><span class='line'><span class="cm">     Accept an Array of objects and convert it to Array of dictionaries by converting each object to dictionary to be persisted in NSUserDefaults.</span>
-</span><span class='line'><span class="cm">     We’re creating an array of encoded values by taking the array parameter and mapping each one using the propertyListRepresentation function to turn it into an array of NSDictionaries.</span>
-</span><span class='line'><span class="cm">     We then run the result through the setObject:forKey function associated with the NSUserDefaults.</span>
-</span><span class='line'>
-</span><span class='line'><span class="cm">     - parameter [T]: the array of objects that conform PropertyListReadable protocol to  to be saved in NSUserDefaults.</span>
-</span><span class='line'><span class="cm">     - parameter key: The key with which to check if it has a value in NSUserDefaults.</span>
-</span><span class='line'><span class="cm">     */</span>
-</span><span class='line'>    <span class="n">func</span> <span class="n">saveValuesToDefaults</span><span class="o">&lt;</span><span class="nl">T</span><span class="p">:</span><span class="n">PropertyListReadable</span><span class="o">&gt;</span><span class="p">(</span><span class="nl">newValues</span><span class="p">:[</span><span class="n">T</span><span class="p">],</span> <span class="nl">key</span><span class="p">:</span><span class="n">String</span><span class="p">)</span> <span class="p">{</span>
-</span><span class='line'>        <span class="n">let</span> <span class="n">encodedValues</span> <span class="o">=</span> <span class="n">newValues</span><span class="p">.</span><span class="n">map</span><span class="p">{</span><span class="err">$</span><span class="mf">0.</span><span class="n">propertyListRepresentation</span><span class="p">()}</span>
-</span><span class='line'>        <span class="bp">NSUserDefaults</span><span class="p">.</span><span class="n">standardUserDefaults</span><span class="p">().</span><span class="n">setObject</span><span class="p">(</span><span class="n">encodedValues</span><span class="p">,</span> <span class="nl">forKey</span><span class="p">:</span><span class="n">key</span><span class="p">)</span>
-</span><span class='line'>    <span class="p">}</span>
-</span></code></pre></td></tr></table></div></figure>
-
-
-<p>P.S. I’ve created a <a href="https://github.com/iSame7/StructPersistorSwiftPlayground">Playground</a> that contains a working example.</p>
-
-<p>Happy Coding :)</p>
-]]></content>
-      
-  </entry>
-  
-  <entry>
-    
-    <title type="html"><![CDATA[Me and Scrum]]></title>
-    <link href="http://isame7.github.io/blog/2015/12/07/me-and-scrum/"/>
-    
-    <updated>2015-12-07T23:04:41+02:00</updated>
-    <id>http://http://isame7.github.io/blog/2015/12/07/me-and-scrum</id>
-    
-      <content type="html"><![CDATA[<p>Today i heared about a tool from a friend of mine called Asana. Asana is the easiest way for teams to track their work. Asana has a a cool UI that make it easy to have a Scrum Boards.</p>
-
-<h1>Explanation of Scrum:</h1>
-
-<p>Scrum is an agile framework for managing a process. It relies on self organizing, cross functional teams to do the work. During the process the team organizes work into small well defined tasks. Tasks are organized into a &ldquo;Product Backlog&rdquo; which is an ordered list of tasks required to create a product. Work on the tasks is done in equal length &ldquo;Sprints&rdquo; which are typically one to four weeks in length.</p>
-
-<p>At the start of each sprint the team takes items from the top of the Product Backlog to build a Sprint Backlog. These are the tasks they commit to completing during the sprint. Items on the Product Backlog may be very high level or very specific. However, for an item to be brought into a sprint it needs to have an estimate (provided by the team) and an acceptance criteria or definition of &ldquo;done&rdquo;.</p>
-
-<p>Each day of the sprint the team comes together in a daily standup to communicate task progress. Each member of the team gives a short summary of what they did yesterday, what they will do today and if there is anything blocking progress on the task at hand. Teams often do this stand up in front of the Scum Board which is a white board or wall containing cards for each task in the sprint. The cards are organized into columns which show the progress of the task from ready to work on to completed (&lsquo;To Do&rsquo;, &lsquo;In Progress&rsquo;, &lsquo;Done&rsquo;).</p>
-
-<p>At the end of the sprint the team comes together to demo what they&rsquo;ve completed during the sprint and finally to discuss the &ldquo;Process&rdquo; in what is called a Sprint Retrospective.</p>
-
-<p>The players of the Scrum team are the Product owner, the Scrum Master and the developers/testers. The Product owner is responsible for maintaining the product backlog, providing priority and knowledge about tasks. The Scrum Master helps the team with the scrum process and works to remove any blockers. The developers/testers are the people building the product. Usually the team consists of five to nine people.</p>
-
-<h2>How i used Asana to create Scrum board:</h2>
-
-<p>I&rsquo;ve started to look at Asana tool to create my first Scrum Board or Scrum project, I&rsquo;ve started to create different sections into my workspace:</p>
-
-<p>1- Scrum Product Backlog: Each task is a story. The task name starts with the story ID and ends with the time estimation between brackets. Use tags to show the priority (PX).</p>
-
-<p>Make sure to activate the &ldquo;bracket&rdquo; hack, to enable automatic sum of numbers between brackets to instantly get the sum of times
-<a href="https://twitter.com/asana/status/451837803219808256">Asana hack</a></p>
-
-<p>2- Scrum Sprints Backlog: Each task is a story. The task name starts with the story ID and ends with the time estimation between brackets. Use tags to show the priority (PX).</p>
-
-<p>3- Scrum Sprint Burndown.</p>
-
-<p>This is a screen shot from my Srum project in Asana.
-<img class="left" src="images/asana.png" title="screenshot #1" ></p>
-
-<p>And here is a video that explain how to use scrum to manage your projects using Asana.
-<a href="https://www.youtube.com/watch?v=RShls6SvreU">Asana</a></p>
-
-<h2>useful links:</h2>
-
-<p>1- Scrum Methodology.
-<a href="http://scrummethodology.com/">Scrum Methodology</a></p>
-
-<p>2- Scrum project management template.
-<a href="https://templana.com/templates/scrum-project-management/">templana</a></p>
-
-<p>3- best way to use Asana with Scrum from Quora.
-<a href="https://www.quora.com/What-is-the-best-way-to-use-Asana-with-scrum-methodology">Quora</a></p>
-
-<p>4- Asana scrum board.
-<a href="https://github.com/chartbeat-labs/asana-scrum-board">Github</a></p>
-]]></content>
-      
-  </entry>
-  
-  <entry>
-    
+<<<<<<< HEAD
     <title type="html"><![CDATA[Symbolicating iOS Crash Reports]]></title>
     <link href="http://isame7.github.io/blog/2015/08/30/symbolicating-ios-crash-reports/"/>
-    
     <updated>2015-08-30T03:25:05+02:00</updated>
-    <id>http://http://isame7.github.io/blog/2015/08/30/symbolicating-ios-crash-reports</id>
-    
-      <content type="html"><![CDATA[<p>It&rsquo;s often difficult to reproduce crashes reported from users, During your app beta testing, and even when you have apps on the App Store.
+    <id>http://isame7.github.io/blog/2015/08/30/symbolicating-ios-crash-reports</id>
+    <content type="html"><![CDATA[<p>It&rsquo;s often difficult to reproduce crashes reported from users, During your app beta testing, and even when you have apps on the App Store.
 Yesterday i faced an issue that my app works well in Debug mode on Xcode but it&rsquo;s crash when installing it from TestFlight and trying the same scenario on it. Unfrtuanalty i was integratting InstaBug &ldquo;it&rsquo;s a crash reporting tool&rdquo; but the trial period ended and no more crahses reported to me over email. So i have to do it manually. Luckily, iOS devices keep logs of each crash and can tell you the exact line of code that causes the problem. Let&rsquo;s take a look at a crash log for my app.</p>
 
 <p><img class="left" src="images/CrashReport.png" title="#2" ></p>
@@ -550,18 +52,14 @@ Where you find &ldquo;symbolicatecrash&rdquo; file , copy this and paste it to &
 
 <p>Happy Coding :)</p>
 ]]></content>
-      
   </entry>
   
   <entry>
-    
     <title type="html"><![CDATA[Performance Test in Xcode]]></title>
     <link href="http://isame7.github.io/blog/2015/08/27/performance-test-in-xcode/"/>
-    
     <updated>2015-08-27T02:48:33+02:00</updated>
-    <id>http://http://isame7.github.io/blog/2015/08/27/performance-test-in-xcode</id>
-    
-      <content type="html"><![CDATA[<p>Yesterday i recieved a JIRA issue from QA that the iOS application is very slow apparently the issue was in application services(API) being very slow to perform any operation.
+    <id>http://isame7.github.io/blog/2015/08/27/performance-test-in-xcode</id>
+    <content type="html"><![CDATA[<p>Yesterday i recieved a JIRA issue from QA that the iOS application is very slow apparently the issue was in application services(API) being very slow to perform any operation.
 I started to investigate in the issue and there was a use case that the user select a file then there was a 2 API that should be called to process this file to be previewed in PDF previewer, So i started to think about a way to calculate the time the process it takes starting from selecting the file untile it&rsquo;s previewed. i eneded up with profiling and therfore i did some research on how to do a profiling in Xcode and i found that Xcode has an addition to unit testing it provide the ability to measure the performance of a piece of code. This allow developers to gain insight into the specific timing infotmation of the code that being tested.</p>
 
 <h2>Performance Testing</h2>
@@ -609,18 +107,14 @@ This is one of the test cases i prepared:</p>
 
 <p>Now you can edit the baseline time of execution for the performance test.</p>
 ]]></content>
-      
   </entry>
   
   <entry>
-    
     <title type="html"><![CDATA[Git Source Control in Xcode]]></title>
     <link href="http://isame7.github.io/blog/2015/08/18/Git-source-control-in-xcode/"/>
-    
     <updated>2015-08-18T18:51:56+02:00</updated>
-    <id>http://http://isame7.github.io/blog/2015/08/18/Git-source-control-in-xcode</id>
-    
-      <content type="html"><![CDATA[<p>It&rsquo;s obvious that adding a Git repository to a project is totally effortless using Xcode. However, what happens if you don&rsquo;t include a Git repo during a project setup, or if you want to add one at a later time? Well, the good news is that you can add a repo for your project at any time, but without using Xcode.</p>
+    <id>http://isame7.github.io/blog/2015/08/18/Git-source-control-in-xcode</id>
+    <content type="html"><![CDATA[<p>It&rsquo;s obvious that adding a Git repository to a project is totally effortless using Xcode. However, what happens if you don&rsquo;t include a Git repo during a project setup, or if you want to add one at a later time? Well, the good news is that you can add a repo for your project at any time, but without using Xcode.</p>
 
 <p>Befor demonstrating anything, you must download the Command line tools through Xcode, as we are going to work in terminal and we need some extra tools available. to install the command line tools, goto the Xcode > Preferences&hellip; menu on Xcode, and then select the Downloads tab. In the upper side of the window, under the Components section, click on the button with a down arrow existing at the right side of the Commnad line Tools options. Once the download is over, a checkmark will appear instead of the download button.</p>
 
@@ -659,18 +153,14 @@ Finally commit all(make the changes permanent):</p>
 
 <p><img class="left" src="images/git-screenshot.png" title="#2" ></p>
 ]]></content>
-      
   </entry>
   
   <entry>
-    
     <title type="html"><![CDATA[watchOS 2: Animations]]></title>
     <link href="http://isame7.github.io/blog/2015/08/03/watchos-2-animations/"/>
-    
     <updated>2015-08-03T00:43:06+02:00</updated>
-    <id>http://http://isame7.github.io/blog/2015/08/03/watchos-2-animations</id>
-    
-      <content type="html"><![CDATA[<p>The new operating system for Apple Watch, watchOS 2, was introduced a couple of weeks ago at WWDC 2015. It brings a lot of improvements, mostly for developers looking to create an Apple Watch app. These are the things that I find to be most important for developers:</p>
+    <id>http://isame7.github.io/blog/2015/08/03/watchos-2-animations</id>
+    <content type="html"><![CDATA[<p>The new operating system for Apple Watch, watchOS 2, was introduced a couple of weeks ago at WWDC 2015. It brings a lot of improvements, mostly for developers looking to create an Apple Watch app. These are the things that I find to be most important for developers:</p>
 
 <ul>
 <li>WatchKit apps are now running natively on the watch. This brings the much needed improvement in speed, resulting in a better user experience.</li>
@@ -721,18 +211,17 @@ Finally commit all(make the changes permanent):</p>
 
 <p>That’s it. Armed with your knowledge about the WatchKit layout system, you are now ready to start working with native animations on watchOS. Let’s get started by creating a sample app so I can show you a couple of examples of how this all fits together.</p>
 ]]></content>
-      
   </entry>
   
   <entry>
-    
-    <title type="html"><![CDATA[How i built Parallax effect Inspired by Yahoo Weather]]></title>
+=======
+>>>>>>> 6238acdfbdb587af63ff1ded7ee05f8525e47df0
+    <title type="html"><![CDATA[How I Built Parallax Effect Inspired by Yahoo Weather]]></title>
     <link href="http://isame7.github.io/blog/2015/07/14/how-i-built-parallax-effect-inspired-by-yahoo-weather-app/"/>
-    
     <updated>2015-07-14T22:07:19+02:00</updated>
-    <id>http://http://isame7.github.io/blog/2015/07/14/how-i-built-parallax-effect-inspired-by-yahoo-weather-app</id>
-    
-      <content type="html"><![CDATA[<p>One of the first projects Yahoo’s Marissa Mayer oversaw as CEO was the Yahoo Weather app. The app was so well received that it even ended up receiving a coveted Apple Design Award in 2013.</p>
+    <id>http://isame7.github.io/blog/2015/07/14/how-i-built-parallax-effect-inspired-by-yahoo-weather-app</id>
+<<<<<<< HEAD
+    <content type="html"><![CDATA[<p>One of the first projects Yahoo’s Marissa Mayer oversaw as CEO was the Yahoo Weather app. The app was so well received that it even ended up receiving a coveted Apple Design Award in 2013.</p>
 
 <p><img class="left" src="images/image_iphone6_gold_portrait.png" title="screenshot #1" ></p>
 
@@ -902,8 +391,10 @@ Finally commit all(make the changes permanent):</p>
 
 
 <p>Check out Glassy control on <a href="https://github.com/iSame7/Glassy">GitHub</a>.</p>
+=======
+    <content type="html"><![CDATA[
+>>>>>>> 6238acdfbdb587af63ff1ded7ee05f8525e47df0
 ]]></content>
-      
   </entry>
   
 </feed>
