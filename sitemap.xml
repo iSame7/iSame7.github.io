@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<urlset xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.sitemaps.org/schemas/sitemap/0.9 http://www.sitemaps.org/schemas/sitemap/0.9/sitemap.xsd" xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
+  <url>
+    <loc>http://isame7.github.io/blog/2016/04/09/reasons-swift-should-be-your-ios-language/</loc>
+    <lastmod>2016-04-09T16:17:05+02:00</lastmod>
+  </url>
+  <url>
+    <loc>http://isame7.github.io/blog/2016/03/16/persisting-structs-in-swift/</loc>
+    <lastmod>2016-03-16T01:50:06+02:00</lastmod>
+  </url>
+  <url>
+    <loc>http://isame7.github.io/blog/2015/12/07/me-and-scrum/</loc>
+    <lastmod>2015-12-07T23:04:41+02:00</lastmod>
+  </url>
+  <url>
+    <loc>http://isame7.github.io/blog/2015/08/30/symbolicating-ios-crash-reports/</loc>
+    <lastmod>2015-08-30T03:25:05+02:00</lastmod>
+  </url>
+  <url>
+    <loc>http://isame7.github.io/blog/2015/08/27/performance-test-in-xcode/</loc>
+    <lastmod>2015-08-27T02:48:33+02:00</lastmod>
+  </url>
+  <url>
+    <loc>http://isame7.github.io/blog/2015/08/18/Git-source-control-in-xcode/</loc>
+    <lastmod>2015-08-18T18:51:56+02:00</lastmod>
+  </url>
+  <url>
+    <loc>http://isame7.github.io/blog/2015/08/03/watchos-2-animations/</loc>
+    <lastmod>2015-08-03T00:43:06+02:00</lastmod>
+  </url>
+  <url>
+    <loc>http://isame7.github.io/blog/2015/07/14/how-i-built-parallax-effect-inspired-by-yahoo-weather-app/</loc>
+    <lastmod>2015-07-14T22:07:19+02:00</lastmod>
+  </url>
+  <url>
+    <loc>http://isame7.github.io/blog/archives/</loc>
+  </url>
+  <url>
+    <loc>http://isame7.github.io/</loc>
+  </url>
+  <url>
+    <loc>http://isame7.github.io/archives/</loc>
+  </url>
+  <url>
+    <loc>http://isame7.github.io/about/</loc>
+  </url>
+</urlset>
